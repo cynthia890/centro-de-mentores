@@ -263,6 +263,22 @@ body.vista-club .quick, body.vista-club .como, body.vista-club .bienvenida{displ
 .caso .escala{font-size:.88rem;font-weight:700;color:var(--ink);text-decoration:none;padding-top:.75rem;border-top:1px dashed var(--line)}
 .caso .escala span{text-decoration:underline;text-decoration-color:var(--c);text-decoration-thickness:2px;text-underline-offset:3px}
 
+/* Secciones plegables (Cuando algo se complica, Cómo nos comunicamos) */
+.plegable > summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.25rem 1.5rem;background:var(--surface);border:1px solid var(--line);border-radius:22px;transition:border-color .15s}
+.plegable > summary::-webkit-details-marker{display:none}
+.plegable > summary::after{content:"+";flex:none;display:grid;place-items:center;width:2rem;height:2rem;border-radius:50%;background:var(--paper);border:1px solid var(--line);font-size:1.25rem;line-height:1}
+.plegable > summary:hover, .plegable[open] > summary{border-color:var(--ink)}
+.plegable[open] > summary::after{content:"−";background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.plegable.alerta > summary{border-left:6px solid var(--alert)}
+.plegable.alerta > summary:hover, .plegable.alerta[open] > summary{border-color:var(--alert)}
+.plegable.alerta > summary::after{background:var(--alert);color:#fff;border-color:var(--alert)}
+.plegable h2{font-family:var(--display);font-weight:800;font-size:clamp(1.4rem,2.6vw,1.8rem);letter-spacing:-.015em;line-height:1.1;margin:0 0 .3rem}
+.pl-intro{display:block;color:var(--ink-soft);max-width:60ch}
+.pl-cuerpo{padding-top:1.25rem}
+.pl-cuerpo > .intro{margin:0 0 1.25rem;color:var(--ink-soft);max-width:62ch}
+@media (max-width:600px){.plegable > summary{padding:1.1rem 1.15rem}}
+#comunicacion.seccion{padding-top:1rem}
+
 /* Comunicación */
 .canales{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
 .canal{flex-direction:column}
@@ -408,16 +424,30 @@ body.vista-club .quick, body.vista-club .como, body.vista-club .bienvenida{displ
   </section>
 
   <section class="seccion" id="complica" aria-labelledby="t-complica">
-    <h2 id="t-complica">Cuando algo se complica</h2>
-    <p class="intro">Es normal que surjan imprevistos, tú tranquilo/a. Lo que tenga que ver con tu equipo, háblalo primero con tu líder de club; si no se resuelve, escríbenos.</p>
     <div id="seguridad"></div>
-    <div class="casos" id="casos"></div>
+    <details class="plegable alerta">
+      <summary>
+        <span class="pl-txt"><h2 id="t-complica">Cuando algo se complica</h2>
+        <span class="pl-intro">Es normal que surjan imprevistos, tú tranquilo/a. Aquí te decimos qué hacer.</span></span>
+      </summary>
+      <div class="pl-cuerpo">
+        <p class="intro">Lo que tenga que ver con tu equipo, háblalo primero con tu líder de club; si no se resuelve, escríbenos.</p>
+        <div class="casos" id="casos"></div>
+      </div>
+    </details>
   </section>
 
   <section class="seccion" id="comunicacion" aria-labelledby="t-com">
-    <h2 id="t-com">Cómo nos comunicamos</h2>
-    <p class="intro">Para que nada se pierda y no te lleguen mensajes repetidos, cada canal tiene su función.</p>
-    <div class="canales" id="canales"></div>
+    <details class="plegable">
+      <summary>
+        <span class="pl-txt"><h2 id="t-com">Cómo nos comunicamos</h2>
+        <span class="pl-intro">Cada canal tiene su función. Ábrelo para ver cuál usar.</span></span>
+      </summary>
+      <div class="pl-cuerpo">
+        <p class="intro">Para que nada se pierda y no te lleguen mensajes repetidos, cada canal tiene su función.</p>
+        <div class="canales" id="canales"></div>
+      </div>
+    </details>
   </section>
 
   <section class="seccion" id="preguntas" aria-labelledby="t-faq">
@@ -956,6 +986,20 @@ const CONFIG = {
   cc.textContent = CONFIG.contacto.correo; cc.href = "mailto:" + CONFIG.contacto.correo;
   const cc2 = document.getElementById("contacto-correo2");
   cc2.textContent = CONFIG.contacto.correo2; cc2.href = "mailto:" + CONFIG.contacto.correo2;
+
+  // Si alguien llega a "Cuando algo se complica" o "Cómo nos comunicamos" con una liga (#complica),
+  // la sección se abre sola para que no se quede viendo la tarjeta cerrada.
+  const abrirPlegable = hash => {
+    const s = hash && hash.length > 1 && document.getElementById(hash.slice(1));
+    const d = s && s.querySelector(":scope > details.plegable");
+    if (d) d.open = true;
+  };
+  abrirPlegable(location.hash);
+  window.addEventListener("hashchange", () => abrirPlegable(location.hash));
+  document.addEventListener("click", ev => {
+    const a = ev.target.closest('a[href^="#"]');
+    if (a) abrirPlegable(a.getAttribute("href"));
+  });
 
   // Las ligas a otros sitios se abren en una pestaña nueva, para que el Centro siga abierto.
   // Las ligas internas (#...) y los correos se quedan igual.
