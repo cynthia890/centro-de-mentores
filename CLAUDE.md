@@ -15,16 +15,19 @@ Sitio para los mentores voluntarios de Technovation México, hecho por Mentorali
 Todo vive en un solo archivo: `index.html` (HTML, CSS y JavaScript juntos; las imágenes del banner y los logos van incrustadas en base64).
 
 - **Todo el contenido editable está en el objeto `CONFIG`**, dentro del `<script>`, entre los comentarios `CONTENIDO DEL CENTRO DE MENTORES` y `FIN DEL CONTENIDO`. Ahí están: `etapaActual`, `contacto`, `avisosHoja`, `avisosEjemplo`, `accesos`, `recursos`, `etapas`, `clubVirtual`, `casos`, `seguridad`, `canales`, `conTuEquipo` y `preguntas`.
-- **Cada recurso se escribe una sola vez** en `CONFIG.recursos` (id, titulo, desc, etapa, tipo, palabras, liga). Las etapas, el Club Virtual, los accesos rápidos y el buscador lo toman de ahí por su `id`. Para poner una liga, cambia `liga: "#"` en ese recurso.
+- **Cada recurso se escribe una sola vez** en `CONFIG.recursos` (id, titulo, desc, etapa, tipo, palabras, liga). Las etapas, el Club Virtual, los Tutoriales, los accesos rápidos y el buscador lo toman de ahí por su `id`. Para poner una liga, cambia `liga: "#"` en ese recurso.
+- Campos opcionales de un recurso: `tutorial: "plataforma"` o `tutorial: "grabacion"` (sale también en la página de Tutoriales, en esa sección) y `ocultarSinLiga: true` (no se muestra en ningún lado mientras su liga sea `"#"`; hoy lo usa "Cómo aceptar tu vinculación con el equipo en la plataforma").
 - **Etapas** (en orden): entrada, vinculacion, aprendizaje, entregas, competencia, celebracion. Para cambiar de etapa se cambia `etapaActual`.
 - **Avisos**: se leen de la Google Sheet "Avisos Centro de Mentores" (pestaña Avisos) publicada como CSV. Mientras `avisosHoja` esté vacío, se muestran los `avisosEjemplo`. Columnas: fecha | tipo | titulo | texto | liga | texto_liga | hasta. Tipos: importante, fecha, general.
-- **Club Virtual**: es una vista aparte. Solo se ve al entrar con `#club-virtual` al final de la liga o al dar clic en su tarjeta. Sus recursos (etapa `club`) no salen en el buscador general.
+- **Club Virtual**: es una vista aparte. Solo se ve al entrar con `#club-virtual` al final de la liga o al dar clic en su tarjeta. Sus recursos (etapa `club`) no salen en el buscador general. Las grabaciones de la sesión informativa y de la orientación del Club Virtual solo van aquí, no en Tutoriales.
+- **Tutoriales**: también es una vista aparte, con el mismo patrón que el Club Virtual. Se abre con `#tutoriales` (el acceso rápido "Tutoriales de la plataforma" lleva ahí) y tiene dos secciones: "Tutoriales de la plataforma" (`tutorial: "plataforma"`) y "Grabaciones de sesiones" (`tutorial: "grabacion"`). Las tarjetas se ordenan por etapa y muestran su etapa. Cada video sigue apareciendo en su etapa y en el buscador.
+- **Classroom de talleres virtuales** (recurso `grab-talleres`): ahí viven las grabaciones de los talleres y los videos de "Inspírate". "Cómo descargar tu certificado" es una guía escrita, no un video.
 - **Buscador**: busca en título, descripción y `palabras`, sin importar acentos. Las palabras clave incluyen sinónimos coloquiales (por ejemplo "permiso papas" encuentra el permiso de papás). Los filtros por etapa y tipo existen pero están ocultos a propósito.
 - Las palomitas de los pasos se guardan en localStorage del navegador de cada mentor (claves `cm2027:...`).
 
 ## Orden de la página
 
-Logos, banner, título y bienvenida, accesos rápidos, Avisos, ¿Dónde estoy en mi temporada?, tarjeta del Club Virtual, Encuentra lo que buscas, Cuando algo se complica, Cómo nos comunicamos, Preguntas frecuentes y Contacto.
+Logos, banner, título y bienvenida, accesos rápidos, Avisos, ¿Dónde estoy en mi temporada?, tarjeta del Club Virtual, Encuentra lo que buscas, Cuando algo se complica, Cómo nos comunicamos, Preguntas frecuentes y Contacto. Aparte, las vistas `#club-virtual` y `#tutoriales`.
 
 ## Diseño
 
@@ -48,6 +51,6 @@ Logos, banner, título y bienvenida, accesos rápidos, Avisos, ¿Dónde estoy en
 - Llenar las ligas de los recursos (hoy casi todas están en `"#"`).
 - Poner las fechas reales de cada etapa (hoy dicen "Fechas por confirmar").
 - Conectar la hoja de avisos: pegar en `avisosHoja` la liga CSV cuando Cynn la publique.
-- Insertar el Google Calendar de talleres en `calendarioInsertado`.
+- Poner la liga del Classroom de talleres virtuales (`grab-talleres`) y de los videos de Tutoriales.
 - Idea a futuro: que la lista de recursos también se lea desde la Google Sheet, en una pestaña "Recursos".
 - Más adelante, el repositorio podría pasarse a la cuenta de GitHub de Mentoralia.

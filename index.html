@@ -226,11 +226,20 @@ body{overflow-x:clip}
 .vacio{padding:1rem 1.2rem;border-radius:12px;background:var(--paper);border:2px dashed var(--line)}
 .vacio p{margin:0}
 
-/* Vista del Club Virtual */
-#club-virtual{display:none}
-body.vista-club #club-virtual{display:block}
-body.vista-club main > .seccion:not(#club-virtual){display:none}
-body.vista-club .quick, body.vista-club .como, body.vista-club .bienvenida{display:none}
+/* Vistas aparte: Club Virtual (#club-virtual) y Tutoriales (#tutoriales) */
+#club-virtual, #tutoriales{display:none}
+body.vista-club #club-virtual, body.vista-tuto #tutoriales{display:block}
+body.vista-club main > .seccion:not(#club-virtual), body.vista-tuto main > .seccion:not(#tutoriales){display:none}
+body.vista-club .quick, body.vista-club .como, body.vista-club .bienvenida,
+body.vista-tuto .quick, body.vista-tuto .como, body.vista-tuto .bienvenida{display:none}
+
+/* Tutoriales */
+.tuto{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.75rem clamp(1.1rem,3vw,2.25rem) 2rem;border-top:8px solid var(--e2)}
+.tuto .recurso{background:var(--paper)}
+.tuto h3{font-family:var(--display);font-weight:800;font-size:1.3rem;line-height:1.2;margin:0 0 .2rem}
+.tuto .sub{margin:0 0 1rem;color:var(--ink-soft);max-width:62ch}
+.tuto .bloque + .bloque{margin-top:2.25rem;padding-top:1.75rem;border-top:1px dashed var(--line)}
+.tuto .pronto{margin:0;padding:1rem 1.2rem;border-radius:12px;border:2px dashed var(--line);color:var(--ink-soft)}
 .volver{display:inline-flex;align-items:center;gap:.4rem;margin:0 0 1.25rem;font-weight:700;text-decoration:none;padding:.45rem 1rem;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
 .volver:hover{border-color:var(--ink)}
 
@@ -405,6 +414,13 @@ body.vista-club .quick, body.vista-club .como, body.vista-club .bienvenida{displ
     <div class="club" id="club"></div>
   </section>
 
+  <section class="seccion" id="tutoriales" aria-labelledby="t-tuto">
+    <a class="volver" href="#temporada">← Volver al Centro de Mentores</a>
+    <h2 id="t-tuto">Tutoriales</h2>
+    <p class="intro">Videos para resolver tus dudas a tu ritmo. Cada uno también aparece en su etapa de la temporada.</p>
+    <div class="tuto" id="tuto"></div>
+  </section>
+
   <section class="seccion" id="recursos" aria-labelledby="t-recursos">
     <h2 id="t-recursos">Encuentra lo que buscas</h2>
     <p class="intro">Todos los recursos del Centro de Mentores en un solo lugar.</p>
@@ -519,7 +535,7 @@ const CONFIG = {
 
   accesos: [
     { texto: "Plataforma global Technovation", recurso: "plataforma" },
-    { texto: "Tutoriales de la plataforma", recurso: "tutoriales" },
+    { texto: "Tutoriales de la plataforma", liga: "#tutoriales", icono: "tutoriales" },
     { texto: "Calendario de talleres", recurso: "calendario" },
     { texto: "Asesorías de programación", recurso: "asesorias" },
     { texto: "Mi líder de club", recurso: "embajadoras" },
@@ -528,39 +544,47 @@ const CONFIG = {
 
   /* Tipos posibles: Video, Guía, Documento, Sesión, Formulario, Calendario
      Etapas posibles: entrada, vinculacion, aprendizaje, entregas,
-     competencia, celebracion, club, toda (sirve en toda la temporada) */
+     competencia, celebracion, club, toda (sirve en toda la temporada)
+     tutorial (opcional): "plataforma" o "grabacion" para que el recurso
+       aparezca también en la página de Tutoriales (#tutoriales).
+     ocultarSinLiga: true para que el recurso no se muestre en ningún lado
+       mientras su liga sea "#". */
   recursos: [
     { id: "capacitacion-global", titulo: "Capacitación global de Technovation", desc: "Los 6 módulos obligatorios de la plataforma internacional.", etapa: "entrada", tipo: "Video", palabras: "curso modulos training global obligatorio", liga: "https://technovationchallenge.org/courses/mentor-training/" },
     { id: "zoom-registro", titulo: "Registro a la sesión sincrónica (Zoom) MX", desc: "Inscríbete a la capacitación en vivo con Mentoralia (90 minutos).", etapa: "entrada", tipo: "Formulario", palabras: "inscripcion capacitacion en vivo zoom", liga: "#" },
-    { id: "grabacion", titulo: "Grabación de la capacitación MX", desc: "Para quien no pudo asistir en vivo o quiere repasar.", etapa: "entrada", tipo: "Video", palabras: "repaso falte no pude asistir", liga: "#" },
+    { id: "grabacion", titulo: "Grabación de la capacitación de Mentoralia", desc: "Para quien no pudo asistir en vivo o quiere repasar.", etapa: "entrada", tipo: "Video", tutorial: "grabacion", palabras: "repaso falte no pude asistir grabacion capacitacion mx", liga: "#" },
     { id: "quiz", titulo: "Quiz y evaluación de la capacitación", desc: "Mínimo 80% para acreditar. Al terminar te aparece la liga al WhatsApp de mentores.", etapa: "entrada", tipo: "Formulario", palabras: "examen acreditar whatsapp evaluacion", liga: "#" },
     { id: "profundizacion", titulo: "Sesión de profundización: vinculación y uso del Centro de Mentores", desc: "Sesión opcional para resolver dudas con más calma.", etapa: "entrada", tipo: "Sesión", palabras: "opcional dudas vinculacion", liga: "#" },
-    { id: "tutoriales", titulo: "Tutoriales de uso de la Plataforma Global", desc: "Videos cortos con lo más importante de la plataforma.", etapa: "toda", tipo: "Video", palabras: "plataforma como usar platform tutorial", liga: "#" },
+    { id: "grab-profundizacion", titulo: "Grabación: sesión de profundización en vinculación y Centro de Mentores", desc: "Para quien no pudo asistir o quiere repasar.", etapa: "entrada", tipo: "Video", tutorial: "grabacion", palabras: "grabacion repaso profundizacion vinculacion centro de mentores", liga: "#" },
     { id: "protocolo", titulo: "Protocolos de Seguridad MX", desc: "Lo que cambia en México respecto al código global de Technovation.", etapa: "toda", tipo: "Documento", palabras: "seguridad proteccion ninas reglas", liga: "https://docs.google.com/document/d/1u_VYsP2UpYAg-xopU4I7GudUZGlu42NSaJtGUtwDwdk/edit?usp=sharing" },
     { id: "plataforma", titulo: "Plataforma global de Technovation", desc: "Donde se registran equipos, mentores y entregables.", etapa: "toda", tipo: "Guía", palabras: "platform registro", liga: "https://my.technovation.org/" },
     { id: "embajadoras", titulo: "Directorio de líderes de club", desc: "Contacto de la líder de club de cada estado.", etapa: "toda", tipo: "Documento", palabras: "contacto estado club lider embajadora embajador site", liga: "https://hub.mentoralia.org/club/red-de-clubes" },
 
-    { id: "navegar", titulo: "Cómo navegar la plataforma global", desc: "Paso a paso para moverte en la plataforma.", etapa: "vinculacion", tipo: "Video", palabras: "plataforma platform", liga: "#" },
+    { id: "navegar", titulo: "Cómo navegar la plataforma global", desc: "Paso a paso para moverte en la plataforma.", etapa: "vinculacion", tipo: "Video", tutorial: "plataforma", palabras: "plataforma platform tutorial", liga: "#" },
     { id: "vincularte", titulo: "Cómo vincularte con un equipo", desc: "Mentoralia te asigna a un equipo ya formado, en dupla con otro mentor.", etapa: "vinculacion", tipo: "Guía", palabras: "asignacion equipo dupla vinculacion", liga: "#" },
-    { id: "perfil", titulo: "Cómo ayudar a tus estudiantes a completar su perfil", desc: "Lo que cada estudiante necesita tener listo en la plataforma.", etapa: "vinculacion", tipo: "Guía", palabras: "perfil registro estudiantes ninas", liga: "#" },
-    { id: "consent", titulo: "Permiso de papás: cómo acompañar a las familias", desc: "Cómo funciona el permiso de papás en la plataforma y cómo acompañar a las familias.", etapa: "vinculacion", tipo: "Guía", palabras: "permiso papas padres consentimiento parental consent firma familias", liga: "#" },
+    // Opcional: no se muestra en ningún lado mientras su liga sea "#"
+    { id: "aceptar-vinculacion", titulo: "Cómo aceptar tu vinculación con el equipo en la plataforma", desc: "Paso a paso para aceptar la invitación de tu equipo en la plataforma global.", etapa: "vinculacion", tipo: "Video", tutorial: "plataforma", ocultarSinLiga: true, palabras: "aceptar vinculacion invitacion equipo plataforma tutorial", liga: "#" },
+    { id: "perfil", titulo: "Cómo ayudar a tus estudiantes a completar su perfil", desc: "Lo que cada estudiante necesita tener listo en la plataforma.", etapa: "vinculacion", tipo: "Video", tutorial: "plataforma", palabras: "perfil registro estudiantes ninas tutorial", liga: "#" },
+    { id: "consent", titulo: "Cómo funciona el permiso de papás en la plataforma", desc: "Paso a paso del permiso de papás en la plataforma y cómo acompañar a las familias.", etapa: "vinculacion", tipo: "Video", tutorial: "plataforma", palabras: "permiso papas padres consentimiento parental consent firma familias tutorial", liga: "#" },
     { id: "primera-reunion", titulo: "Guía de primera reunión con tu equipo", desc: "Qué hacer y qué decir en el primer encuentro.", etapa: "vinculacion", tipo: "Guía", palabras: "primera sesion inicio conocer", liga: "#" },
 
     { id: "curr-estudiantes", titulo: "Currículum para estudiantes", desc: "El contenido que tu equipo va a trabajar, unidad por unidad.", etapa: "aprendizaje", tipo: "Documento", palabras: "curriculum ninas contenido unidades curriculo", liga: "https://technovationchallenge.org/technovation-curriculum/" },
     { id: "curr-mentor", titulo: "Currículum del mentor", desc: "Cómo acompañar cada unidad desde tu rol de mentor.", etapa: "aprendizaje", tipo: "Documento", palabras: "curriculum mentor guia curriculo", liga: "https://technovationchallenge.org/mentor-curriculum/" },
     { id: "rubricas", titulo: "Rúbricas de evaluación", desc: "Con qué se van a evaluar los proyectos; úsalas como guía desde el inicio.", etapa: "aprendizaje", tipo: "Documento", palabras: "rubrica evaluacion criterios jueces calificacion", liga: "https://technovationchallenge.org/curriculum/judging-rubric/" },
     { id: "calendario", titulo: "Calendario de talleres virtuales", desc: "Fechas de los talleres temáticos de la temporada.", etapa: "aprendizaje", tipo: "Calendario", palabras: "talleres fechas design thinking pitch programacion", liga: "https://calendar.google.com/calendar/embed?src=cvmd04e0bq62mv63eo4le0v518%40group.calendar.google.com&ctz=America%2FMexico_City" },
-    { id: "grab-talleres", titulo: "Grabaciones de talleres", desc: "Biblioteca de talleres pasados para consultar cuando quieras.", etapa: "aprendizaje", tipo: "Video", palabras: "talleres grabaciones repaso", liga: "#" },
+    { id: "grab-talleres", titulo: "Classroom de talleres virtuales", desc: "Aquí viven las grabaciones de los talleres, para verlas cuando quieras.", etapa: "aprendizaje", tipo: "Video", palabras: "talleres grabaciones repaso classroom google", liga: "#" },
     { id: "asesorias", titulo: "Asesorías de programación", desc: "Apoyo técnico puntual para tu equipo.", etapa: "aprendizaje", tipo: "Sesión", palabras: "codigo app programar ayuda tecnica", liga: "#" },
     { id: "motivar", titulo: "Cómo animar y motivar a tu equipo", desc: "Ideas para mantener el ritmo durante la temporada.", etapa: "aprendizaje", tipo: "Guía", palabras: "motivacion animo ritmo", liga: "#" },
 
     { id: "prep-entregas", titulo: "Sesiones de preparación para entregables", desc: "Sesiones para dejar todo listo antes de subir.", etapa: "entregas", tipo: "Sesión", palabras: "entregables preparacion", liga: "#" },
-    { id: "subir", titulo: "Cómo subir los entregables", desc: "Paso a paso en la plataforma, incluido el video del pitch.", etapa: "entregas", tipo: "Guía", palabras: "subir pitch video entrega plataforma", liga: "#" },
+    { id: "grab-prep-entregas", titulo: "Grabación: sesiones de preparación para entregables", desc: "Para quien no pudo asistir o quiere repasar antes de subir.", etapa: "entregas", tipo: "Video", tutorial: "grabacion", palabras: "grabacion repaso entregables preparacion", liga: "#" },
+    { id: "subir", titulo: "Cómo subir los entregables", desc: "Paso a paso en la plataforma, incluido el video del pitch.", etapa: "entregas", tipo: "Video", tutorial: "plataforma", palabras: "subir pitch video entrega plataforma tutorial", liga: "#" },
     { id: "revisar", titulo: "Cómo revisar los entregables con las rúbricas", desc: "Úsalas para una última revisión antes de enviar.", etapa: "entregas", tipo: "Guía", palabras: "rubrica revision", liga: "#" },
     { id: "checklist-entregas", titulo: "Checklist de entregables por categoría", desc: "Beginner, Junior y Senior.", etapa: "entregas", tipo: "Documento", palabras: "checklist entregables beginner junior senior", liga: "#" },
 
     { id: "eventos-regionales", titulo: "Eventos regionales", desc: "Qué son los Regional Pitch Events, cuándo son y qué esperar. También son la primera ronda de evaluación.", etapa: "competencia", tipo: "Guía", palabras: "regional pitch events rpe evaluacion jueces ronda", liga: "#" },
     { id: "sesion-finales", titulo: "Sesión informativa: eventos finales y World Summit 2027", desc: "Cómo funcionan las etapas finales y el World Summit, y cómo acompañar a tu equipo si avanza.", etapa: "competencia", tipo: "Sesión", palabras: "final world summit semifinal finalistas viaje", liga: "#" },
+    { id: "grab-finales", titulo: "Grabación: sesión informativa de eventos finales y World Summit 2027", desc: "Para quien no pudo asistir o quiere repasar.", etapa: "competencia", tipo: "Video", tutorial: "grabacion", palabras: "grabacion repaso final world summit semifinal finalistas", liga: "#" },
 
     { id: "eventos-finales", titulo: "Eventos finales", desc: "Quién asiste, dónde, formato y duración.", etapa: "celebracion", tipo: "Guía", palabras: "final evento cierre celebracion", liga: "#" },
     { id: "certificado", titulo: "Cómo descargar tu certificado de participación", desc: "Paso a paso para obtener tu constancia como mentor de la temporada.", etapa: "celebracion", tipo: "Guía", palabras: "certificado constancia reconocimiento descargar diploma", liga: "#" },
@@ -576,11 +600,11 @@ const CONFIG = {
     { id: "complica", titulo: "Cuando algo se complica", desc: "Qué hacer ante imprevistos con tu equipo, las familias o la plataforma.", etapa: "toda", tipo: "Guía", palabras: "problema ayuda conflicto imprevisto escalar", liga: "#complica" },
     { id: "faq", titulo: "Preguntas frecuentes", desc: "Respuestas rápidas a las dudas más comunes de los mentores.", etapa: "toda", tipo: "Guía", palabras: "faq dudas preguntas ayuda", liga: "#preguntas" },
 
-    { id: "background", titulo: "Perfil y background check", desc: "Paso a paso para completar tu perfil y tu background check en la plataforma global. Es requisito para vincularte.", etapa: "entrada", tipo: "Guía", palabras: "perfil registro verificacion antecedentes requisito seguridad onboarding", liga: "https://my.technovation.org/" },
+    { id: "background", titulo: "Cómo completar tu perfil y tu background check", desc: "Paso a paso para completar tu perfil y tu background check en la plataforma global. Es requisito para vincularte.", etapa: "entrada", tipo: "Video", tutorial: "plataforma", palabras: "perfil registro verificacion antecedentes requisito seguridad onboarding tutorial", liga: "https://my.technovation.org/" },
     { id: "acuerdo-equipo", titulo: "Acuerdo de trabajo con tu equipo", desc: "Para ponerse de acuerdo con tu equipo en cómo van a trabajar juntos durante la temporada.", etapa: "vinculacion", tipo: "Documento", palabras: "acuerdo trabajo equipo reglas compromisos convivencia dupla", liga: "https://drive.google.com/file/d/1EFSeuPitRLOrx7Idy0BSZuXAHsB_DQrw/view?usp=sharing" },
     { id: "guia-entregables", titulo: "Guía de entregables", desc: "Qué incluye cada entregable, con los cambios de esta temporada: ética, Business Canvas y video técnico.", etapa: "aprendizaje", tipo: "Guía", palabras: "entregables etica business canvas video tecnico pitch requisitos", liga: "#" },
     { id: "banco-casos", titulo: "Banco de casos prácticos", desc: "Los casos de la capacitación, para consultarlos cuando enfrentes una situación real.", etapa: "aprendizaje", tipo: "Documento", palabras: "casos practica ejemplos situaciones", liga: "#" },
-    { id: "inspirate", titulo: "Inspírate", desc: "Historias para motivarte a ti y a tu equipo.", etapa: "aprendizaje", tipo: "Video", palabras: "motivacion historias inspiracion", liga: "#" },
+    { id: "inspirate", titulo: "Inspírate", desc: "Historias para motivarte a ti y a tu equipo. Las encuentras en el Classroom de talleres virtuales.", etapa: "aprendizaje", tipo: "Video", palabras: "motivacion historias inspiracion classroom", liga: "#" },
     { id: "reglas", titulo: "Reglas de la competencia y requisitos de entrega", desc: "Lo que debe cumplir cada proyecto para poder ser evaluado.", etapa: "entregas", tipo: "Documento", palabras: "reglas requisitos submission competencia elegibilidad", liga: "#" }
   ],
 
@@ -596,7 +620,7 @@ const CONFIG = {
         { texto: "Contesta el quiz y la evaluación (mínimo 80%)", nota: "Al terminarlo te aparece la liga para unirte al WhatsApp de mentores. Si acreditas, ¡ya puedes vincularte con un equipo!", recurso: "quiz" },
         { texto: "Sesión de profundización en vinculación y uso del Centro de Mentores", opcional: true, recurso: "profundizacion" }
       ],
-      extra: ["tutoriales", "protocolo"]
+      extra: ["protocolo"]
     },
     { id: "vinculacion", nombre: "Planeando y vinculación", frase: "¡A conocer a tu equipo!", fechas: "Fechas por confirmar", color: "--e2", resumen: "Te asignamos un equipo y lo ayudas a arrancar." },
     { id: "aprendizaje", nombre: "Camino de aprendizaje", frase: "Manos a la obra", fechas: "Fechas por confirmar", color: "--e3", resumen: "Tu equipo aprende y construye su proyecto.", calendario: true },
@@ -665,6 +689,8 @@ const CONFIG = {
     get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
     set(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
   };
+  // Los recursos marcados con ocultarSinLiga no se muestran mientras su liga sea "#"
+  CONFIG.recursos = CONFIG.recursos.filter(r => !(r.ocultarSinLiga && (!r.liga || r.liga === "#")));
   const R = {}; CONFIG.recursos.forEach(r => R[r.id] = r);
   const etapas = CONFIG.etapas;
   const etapaNombre = { toda: "Toda la temporada", club: "Club Virtual" };
@@ -686,7 +712,7 @@ const CONFIG = {
     complica: ['--alert', '<path d="M12 3.5l9 16H3z"/><path d="M12 10v4M12 17v.01"/>']
   };
   document.getElementById("accesos").innerHTML = CONFIG.accesos.map(a => {
-    const [color, svg] = ICONOS[a.recurso || "complica"] || ['--ink', ''];
+    const [color, svg] = ICONOS[a.icono || a.recurso || "complica"] || ['--ink', ''];
     return `<li><a href="${esc(ligaDe(a))}"${a.alerta ? ' class="alerta"' : ""} style="--c:var(${color})"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24">${svg}</svg></span>${esc(a.texto)}</a></li>`;
   }).join("");
 
@@ -891,12 +917,29 @@ const CONFIG = {
     <h3>Recursos del Club Virtual</h3><ul class="rlista">${cvExtra.map(r => tarjeta(r)).join("")}</ul>`;
   activarPasos(club, cv.pasos, "cm2027:club");
 
-  // El Club Virtual es una vista aparte: solo se ve con la liga que termina en #club-virtual.
+  // Tutoriales: toma de CONFIG.recursos los que tienen tutorial: "plataforma" o "grabacion",
+  // ordenados por etapa. Cada tarjeta muestra su etapa.
+  const ordenEtapa = id => { const i = etapas.findIndex(e => e.id === id); return i < 0 ? 99 : i; };
+  const bloqueTuto = (tipo, titulo, sub) => {
+    const lista = CONFIG.recursos.filter(r => r.tutorial === tipo).sort((a,b) => ordenEtapa(a.etapa) - ordenEtapa(b.etapa));
+    return `<div class="bloque"><h3>${esc(titulo)}</h3><p class="sub">${esc(sub)}</p>` + (lista.length
+      ? `<ul class="rlista">${lista.map(r => tarjeta(r, true)).join("")}</ul>`
+      : `<p class="pronto">Muy pronto encontrarás aquí los videos.</p>`) + `</div>`;
+  };
+  document.getElementById("tuto").innerHTML =
+    bloqueTuto("plataforma", "Tutoriales de la plataforma", "Videos cortos de cómo hacer algo paso a paso.") +
+    bloqueTuto("grabacion", "Grabaciones de sesiones", "Para quien no pudo asistir o quiere repasar.");
+
+  // El Club Virtual y los Tutoriales son vistas aparte: solo se ven con la liga
+  // que termina en #club-virtual o #tutoriales.
+  const VISTAS = { "#club-virtual": "vista-club", "#tutoriales": "vista-tuto" };
   function revisarClub(){
-    const on = location.hash === "#club-virtual";
-    const antes = document.body.classList.contains("vista-club");
-    document.body.classList.toggle("vista-club", on);
-    if (on && !antes) document.getElementById("club-virtual").scrollIntoView();
+    Object.entries(VISTAS).forEach(([hash, clase]) => {
+      const on = location.hash === hash;
+      const antes = document.body.classList.contains(clase);
+      document.body.classList.toggle(clase, on);
+      if (on && !antes) document.getElementById(hash.slice(1)).scrollIntoView();
+    });
   }
 
   // Buscador
