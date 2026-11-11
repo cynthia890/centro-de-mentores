@@ -953,6 +953,13 @@ const CONFIG = {
   cc.textContent = CONFIG.contacto.correo; cc.href = "mailto:" + CONFIG.contacto.correo;
   const cc2 = document.getElementById("contacto-correo2");
   cc2.textContent = CONFIG.contacto.correo2; cc2.href = "mailto:" + CONFIG.contacto.correo2;
+
+  // Las ligas a otros sitios se abren en una pestaña nueva, para que el Centro siga abierto.
+  // Las ligas internas (#...) y los correos se quedan igual.
+  document.addEventListener("click", ev => {
+    const a = ev.target.closest('a[href^="http"]');
+    if (a) { a.target = "_blank"; a.rel = "noopener"; }
+  });
 })();
 </script>
 </body>
