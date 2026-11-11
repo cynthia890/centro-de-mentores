@@ -160,6 +160,7 @@ a{color:inherit}
 .cal{margin:.25rem 0 0;border:2px dashed var(--line);border-radius:14px;padding:1.25rem;display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;justify-content:space-between;color:var(--ink-soft)}
 .cal iframe{width:100%;height:28rem;border:0;border-radius:10px}
 .cal-wrap{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.cal-wrap iframe{display:block;width:100%;height:30rem;border:0;background:#fff}
 
 /* Lista de recursos (compartida) */
 .rlista{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
@@ -458,7 +459,7 @@ const CONFIG = {
   },
 
   // Liga para insertar el Google Calendar público de talleres (déjala vacía para mostrar solo la liga)
-  calendarioInsertado: "",
+  calendarioInsertado: "https://calendar.google.com/calendar/embed?src=cvmd04e0bq62mv63eo4le0v518%40group.calendar.google.com&ctz=America%2FMexico_City",
 
   /* AVISOS
      - avisosHoja: liga CSV de la Google Sheet publicada en la web. Mientras esté
