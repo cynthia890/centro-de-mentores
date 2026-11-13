@@ -14,7 +14,7 @@ Sitio para los mentores voluntarios de Technovation México, hecho por Mentorali
 
 Todo vive en un solo archivo: `index.html` (HTML, CSS y JavaScript juntos; las imágenes del banner y los logos van incrustadas en base64).
 
-- **Todo el contenido editable está en el objeto `CONFIG`**, dentro del `<script>`, entre los comentarios `CONTENIDO DEL CENTRO DE MENTORES` y `FIN DEL CONTENIDO`. Ahí están: `etapaActual`, `contacto`, `avisosHoja`, `avisosEjemplo`, `accesos`, `recursos`, `etapas`, `clubVirtual`, `casos`, `seguridad`, `canales`, `conTuEquipo` y `preguntas`.
+- **Todo el contenido editable está en el objeto `CONFIG`**, dentro del `<script>`, entre los comentarios `CONTENIDO DEL CENTRO DE MENTORES` y `FIN DEL CONTENIDO`. Ahí están: `etapaActual`, `contacto`, `avisosHoja`, `avisosEjemplo`, `accesos`, `whatsapp`, `recursos`, `etapas`, `clubVirtual`, `casos`, `seguridad`, `canales`, `conTuEquipo` y `preguntas`.
 - **Cada recurso se escribe una sola vez** en `CONFIG.recursos` (id, titulo, desc, etapa, tipo, palabras, liga). Las etapas, el Club Virtual, los Tutoriales, los accesos rápidos y el buscador lo toman de ahí por su `id`. Para poner una liga, cambia `liga: "#"` en ese recurso.
 - Campos opcionales de un recurso: `tutorial: "plataforma"` o `tutorial: "grabacion"` (sale también en la página de Tutoriales, en esa sección) y `ocultarSinLiga: true` (no se muestra en ningún lado mientras su liga sea `"#"`; hoy lo usa "Cómo aceptar tu vinculación con el equipo en la plataforma").
 - **Etapas** (en orden): entrada, vinculacion, aprendizaje, entregas, competencia, celebracion. Para cambiar de etapa se cambia `etapaActual`.
@@ -22,6 +22,8 @@ Todo vive en un solo archivo: `index.html` (HTML, CSS y JavaScript juntos; las i
 - **Club Virtual**: es una vista aparte. Solo se ve al entrar con `#club-virtual` al final de la liga o al dar clic en su tarjeta. Sus recursos (etapa `club`) no salen en el buscador general. Las grabaciones de la sesión informativa y de la orientación del Club Virtual solo van aquí, no en Tutoriales.
 - **Tutoriales**: también es una vista aparte, con el mismo patrón que el Club Virtual. Se abre con `#tutoriales` (el acceso rápido "Tutoriales de la plataforma" lleva ahí) y tiene dos secciones: "Tutoriales de la plataforma" (`tutorial: "plataforma"`) y "Grabaciones de sesiones" (`tutorial: "grabacion"`). Las tarjetas se ordenan por etapa y muestran su etapa. Cada video sigue apareciendo en su etapa y en el buscador.
 - **Classroom de talleres virtuales** (recurso `grab-talleres`): ahí viven las grabaciones de los talleres y los videos de "Inspírate". "Cómo descargar tu certificado" es una guía escrita, no un video.
+- **WhatsApp de mentores**: el acceso rápido (y cualquier liga a `#whatsapp`) abre una ventanita: la liga se da al terminar el quiz de evaluación, y si ya lo hicieron y no la tienen, un botón abre un correo a Cynn con asunto y texto ya escritos. Los textos están en `CONFIG.whatsapp`. La liga del grupo nunca va en el sitio.
+- **Asesorías de programación** empiezan en marzo; por eso no están en los accesos rápidos (sí en su etapa y en el buscador).
 - **Buscador**: busca en título, descripción y `palabras`, sin importar acentos. Las palabras clave incluyen sinónimos coloquiales (por ejemplo "permiso papas" encuentra el permiso de papás). Los filtros por etapa y tipo existen pero están ocultos a propósito.
 - Las palomitas de los pasos se guardan en localStorage del navegador de cada mentor (claves `cm2027:...`).
 

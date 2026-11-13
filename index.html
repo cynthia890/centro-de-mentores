@@ -73,6 +73,19 @@ a{color:inherit}
 .quick a:hover{transform:translateY(-2px);border-color:var(--c)}
 .quick .ico{flex:none;width:2.6rem;height:2.6rem;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 22%,var(--surface));color:var(--ink)}
 .quick .ico svg{width:1.35rem;height:1.35rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* Ventanita del WhatsApp de mentores */
+.ventana{width:min(28rem,calc(100% - 2rem));max-height:calc(100% - 2rem);overflow:auto;padding:1.75rem 1.5rem 1.5rem;border:1px solid var(--line);border-top:8px solid var(--e4);border-radius:22px;background:var(--surface);color:var(--ink);box-shadow:0 20px 50px rgba(29,19,73,.3)}
+.ventana::backdrop{background:rgba(29,19,73,.55)}
+.ventana .cerrar{position:absolute;top:.85rem;right:.85rem;width:2.2rem;height:2.2rem;border-radius:50%;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:1rem;cursor:pointer}
+.ventana .cerrar:hover{border-color:var(--ink)}
+.ventana .wa-ico{width:2.8rem;height:2.8rem;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--e4) 22%,var(--surface));margin-bottom:.75rem}
+.ventana .wa-ico svg{width:1.4rem;height:1.4rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ventana h2{font-family:var(--display);font-weight:800;font-size:1.45rem;line-height:1.15;margin:0 0 .5rem;padding-right:2rem}
+.ventana p{margin:0}
+.ventana .wa-caja{margin-top:1.1rem;padding:1rem 1.1rem;border-radius:14px;background:var(--paper);border:1px dashed var(--line);display:grid;gap:.8rem;justify-items:start}
+.ventana .wa-caja p{color:var(--ink-soft)}
+.ventana .wa-btn{font-weight:700;text-decoration:none;padding:.65rem 1.2rem;border-radius:999px;background:var(--ink);color:var(--paper)}
+.ventana .wa-btn:hover{background:var(--e4);color:#1D1349}
 .quick a.alerta{background:var(--alert-bg);color:var(--alert)}
 .quick a.alerta .ico{background:var(--alert);color:#fff}
 @media (max-width:760px){
@@ -364,7 +377,7 @@ body.vista-tuto .quick, body.vista-tuto .como, body.vista-tuto .bienvenida{displ
         <li>En “¿Dónde estoy en mi temporada?” ves en qué etapa vamos y qué te toca. Puedes ir marcando tus pasos.</li>
         <li>¿Buscas algo en específico? Usa el buscador de “Encuentra lo que buscas”.</li>
         <li>Si algo no sale como esperabas, “Cuando algo se complica” está para ti en cualquier momento.</li>
-        <li>¿Y el WhatsApp de mentores? La liga para unirte te aparece al terminar el quiz de la etapa de Entrada.</li>
+        <li>¿Y el WhatsApp de mentores? Te damos la liga al terminar el quiz de evaluación de la capacitación. Si ya lo hiciste y no la tienes, toca el botón <a href="#whatsapp">WhatsApp de mentores</a> y pídenosla por correo.</li>
       </ul>
     </details>
   </div>
@@ -373,6 +386,17 @@ body.vista-tuto .quick, body.vista-tuto .como, body.vista-tuto .bienvenida{displ
 <nav class="quick" aria-label="Accesos rápidos">
   <div class="wrap"><ul id="accesos"></ul></div>
 </nav>
+
+<dialog class="ventana" id="ventana-wa" aria-labelledby="wa-titulo">
+    <button type="button" class="cerrar" aria-label="Cerrar">✕</button>
+    <span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/></svg></span>
+    <h2 id="wa-titulo">WhatsApp de mentores</h2>
+    <p id="wa-texto"></p>
+    <div class="wa-caja">
+      <p id="wa-sinliga"></p>
+      <a class="wa-btn" id="wa-correo" href="#"></a>
+    </div>
+  </dialog>
 
 <main class="wrap">
   <section class="seccion" id="avisos" aria-labelledby="t-avisos" hidden>
@@ -537,10 +561,22 @@ const CONFIG = {
     { texto: "Plataforma global Technovation", recurso: "plataforma" },
     { texto: "Tutoriales de la plataforma", liga: "#tutoriales", icono: "tutoriales" },
     { texto: "Calendario de talleres", recurso: "calendario" },
-    { texto: "Asesorías de programación", recurso: "asesorias" },
+    { texto: "WhatsApp de mentores", liga: "#whatsapp", icono: "whatsapp" },
     { texto: "Mi líder de club", recurso: "embajadoras" },
     { texto: "Cuando algo se complica", liga: "#complica", alerta: true }
   ],
+
+  /* WHATSAPP DE MENTORES
+     El botón de arriba abre una ventanita con estas indicaciones. La liga del
+     grupo NUNCA va aquí (el sitio es público): se da al terminar el quiz.
+     "correoTexto" es el mensaje que ya va escrito cuando el mentor nos escribe. */
+  whatsapp: {
+    texto: "Te damos la liga del grupo cuando terminas el quiz de evaluación de la capacitación: aparece en el mensaje de confirmación.",
+    sinLiga: "¿Ya hiciste tu quiz y no tienes la liga? Mándanos un correo y te la compartimos.",
+    boton: "Pedir la liga por correo",
+    correoAsunto: "Liga del WhatsApp de mentores",
+    correoTexto: "¡Hola, Cynthia!\n\nYa terminé el quiz de evaluación de la capacitación, pero no tengo la liga del WhatsApp de mentores. ¿Me la puedes compartir?\n\nMi nombre completo:\nEl correo con el que me registré en la plataforma:\nMi estado o club (si ya lo sé):\n\n¡Gracias!"
+  },
 
   /* Tipos posibles: Video, Guía, Documento, Sesión, Formulario, Calendario
      Etapas posibles: entrada, vinculacion, aprendizaje, entregas,
@@ -553,7 +589,7 @@ const CONFIG = {
     { id: "capacitacion-global", titulo: "Capacitación global de Technovation", desc: "Los 6 módulos obligatorios de la plataforma internacional.", etapa: "entrada", tipo: "Video", palabras: "curso modulos training global obligatorio", liga: "https://technovationchallenge.org/courses/mentor-training/" },
     { id: "zoom-registro", titulo: "Registro a la sesión sincrónica (Zoom) MX", desc: "Inscríbete a la capacitación en vivo con Mentoralia (90 minutos).", etapa: "entrada", tipo: "Formulario", palabras: "inscripcion capacitacion en vivo zoom", liga: "#" },
     { id: "grabacion", titulo: "Grabación de la capacitación de Mentoralia", desc: "Para quien no pudo asistir en vivo o quiere repasar.", etapa: "entrada", tipo: "Video", tutorial: "grabacion", palabras: "repaso falte no pude asistir grabacion capacitacion mx", liga: "#" },
-    { id: "quiz", titulo: "Quiz y evaluación de la capacitación", desc: "Mínimo 80% para acreditar. Al terminar te aparece la liga al WhatsApp de mentores.", etapa: "entrada", tipo: "Formulario", palabras: "examen acreditar whatsapp evaluacion", liga: "#" },
+    { id: "quiz", titulo: "Quiz y evaluación de la capacitación", desc: "Mínimo 80% para acreditar. Al terminarlo te damos la liga del WhatsApp de mentores.", etapa: "entrada", tipo: "Formulario", palabras: "examen acreditar whatsapp evaluacion", liga: "#" },
     { id: "profundizacion", titulo: "Sesión de profundización: vinculación y uso del Centro de Mentores", desc: "Sesión opcional para resolver dudas con más calma.", etapa: "entrada", tipo: "Sesión", palabras: "opcional dudas vinculacion", liga: "#" },
     { id: "grab-profundizacion", titulo: "Grabación: sesión de profundización en vinculación y Centro de Mentores", desc: "Para quien no pudo asistir o quiere repasar.", etapa: "entrada", tipo: "Video", tutorial: "grabacion", palabras: "grabacion repaso profundizacion vinculacion centro de mentores", liga: "#" },
     { id: "protocolo", titulo: "Protocolos de Seguridad MX", desc: "Lo que cambia en México respecto al código global de Technovation.", etapa: "toda", tipo: "Documento", palabras: "seguridad proteccion ninas reglas", liga: "https://docs.google.com/document/d/1u_VYsP2UpYAg-xopU4I7GudUZGlu42NSaJtGUtwDwdk/edit?usp=sharing" },
@@ -573,7 +609,7 @@ const CONFIG = {
     { id: "rubricas", titulo: "Rúbricas de evaluación", desc: "Con qué se van a evaluar los proyectos; úsalas como guía desde el inicio.", etapa: "aprendizaje", tipo: "Documento", palabras: "rubrica evaluacion criterios jueces calificacion", liga: "https://technovationchallenge.org/curriculum/judging-rubric/" },
     { id: "calendario", titulo: "Calendario de talleres virtuales", desc: "Fechas de los talleres temáticos de la temporada.", etapa: "aprendizaje", tipo: "Calendario", palabras: "talleres fechas design thinking pitch programacion", liga: "https://calendar.google.com/calendar/embed?src=cvmd04e0bq62mv63eo4le0v518%40group.calendar.google.com&ctz=America%2FMexico_City" },
     { id: "grab-talleres", titulo: "Classroom de talleres virtuales", desc: "Aquí viven las grabaciones de los talleres, para verlas cuando quieras.", etapa: "aprendizaje", tipo: "Video", palabras: "talleres grabaciones repaso classroom google", liga: "#" },
-    { id: "asesorias", titulo: "Asesorías de programación", desc: "Apoyo técnico puntual para tu equipo.", etapa: "aprendizaje", tipo: "Sesión", palabras: "codigo app programar ayuda tecnica", liga: "#" },
+    { id: "asesorias", titulo: "Asesorías de programación", desc: "Apoyo técnico puntual para tu equipo. Disponibles a partir de marzo.", etapa: "aprendizaje", tipo: "Sesión", palabras: "codigo app programar ayuda tecnica", liga: "#" },
     { id: "motivar", titulo: "Cómo animar y motivar a tu equipo", desc: "Ideas para mantener el ritmo durante la temporada.", etapa: "aprendizaje", tipo: "Guía", palabras: "motivacion animo ritmo", liga: "#" },
 
     { id: "prep-entregas", titulo: "Sesiones de preparación para entregables", desc: "Sesiones para dejar todo listo antes de subir.", etapa: "entregas", tipo: "Sesión", palabras: "entregables preparacion", liga: "#" },
@@ -617,7 +653,7 @@ const CONFIG = {
         { texto: "Completa tu perfil y tu background check en la plataforma global", nota: "El background check es requisito para mentores en México desde esta temporada; sin él no puedes vincularte. Si tienes dudas, revisa los tutoriales de la plataforma.", recurso: "background" },
         { texto: "Regístrate a la sesión sincrónica (Zoom) MX", recurso: "zoom-registro" },
         { texto: "Asiste a la sesión, o ve la grabación si no pudiste", recurso: "grabacion" },
-        { texto: "Contesta el quiz y la evaluación (mínimo 80%)", nota: "Al terminarlo te aparece la liga para unirte al WhatsApp de mentores. Si acreditas, ¡ya puedes vincularte con un equipo!", recurso: "quiz" },
+        { texto: "Contesta el quiz y la evaluación (mínimo 80%)", nota: "Al terminarlo te damos la liga del WhatsApp de mentores. Si ya lo hiciste y no la tienes, pídenosla desde el botón WhatsApp de mentores de arriba. Si acreditas, ¡ya puedes vincularte con un equipo!", recurso: "quiz" },
         { texto: "Sesión de profundización en vinculación y uso del Centro de Mentores", opcional: true, recurso: "profundizacion" }
       ],
       extra: ["protocolo"]
@@ -657,7 +693,7 @@ const CONFIG = {
   },
 
   canales: [
-    { titulo: "WhatsApp de mentores", icono: "chat", color: "--e4", etiqueta: "Rápido", texto: "Avisos rápidos y dudas del día a día con la comunidad de mentores.", nota: "La liga te aparece al terminar el quiz de Entrada." },
+    { titulo: "WhatsApp de mentores", icono: "chat", color: "--e4", etiqueta: "Rápido", texto: "Avisos rápidos y dudas del día a día con la comunidad de mentores.", nota: "Te damos la liga al terminar el quiz de evaluación. ¿Ya lo hiciste y no la tienes? Pídenosla desde el botón WhatsApp de mentores de arriba." },
     { titulo: "Tu líder de club", icono: "lider", color: "--e2", etiqueta: "Tu equipo", texto: "Todo lo que tenga que ver con tu equipo (horarios, integrantes, avances o cualquier situación) lo ves directamente con tu líder de club.", nota: "Si mentoreas en el Club Virtual, tu líder de club es Mentoralia." },
     { titulo: "Correo", icono: "correo", color: "--e3", etiqueta: "Oficial", texto: "Lo institucional: fechas, asignación de equipo y avisos importantes de la temporada." }
   ],
@@ -674,7 +710,7 @@ const CONFIG = {
     { p: "¿Con quién veo los temas de mi equipo?", r: "Con tu líder de club: horarios, integrantes, avances o cualquier situación del día a día. Si mentoreas en el Club Virtual, tu líder de club es Mentoralia." },
     { p: "¿Cómo me asignan un equipo?", r: "Mentoralia te asigna a un equipo ya formado, en dupla con otro mentor. Tienes 3 semanas después de la capacitación para quedar vinculado." },
     { p: "¿Es obligatorio el background check?", r: "Sí. Desde esta temporada es requisito para todos los mentores en México, y sin él no puedes vincularte con un equipo." },
-    { p: "¿Cómo me uno al WhatsApp de mentores?", r: "La liga te aparece al terminar el quiz y la evaluación de la etapa de Entrada." },
+    { p: "¿Cómo me uno al WhatsApp de mentores?", r: "Te damos la liga al terminar el quiz de evaluación de la capacitación (etapa de Entrada). Si ya lo hiciste y no la tienes, toca el botón «WhatsApp de mentores» de arriba y mándanos un correo; ya va con el texto escrito." },
     { p: "¿Puedo escribirle directo a una estudiante?", r: "No. La comunicación es siempre en grupo, con sus compañeras y sus familias, y en los correos se copia a madres, padres o tutores. Tampoco se intercambian números de teléfono." },
     { p: "¿Cómo obtengo mi certificado de participación?", r: "Al cierre de la temporada lo descargas siguiendo la guía de la etapa de Celebración." },
     { p: "¿A quién le escribo si tengo una duda?", r: "Primero revisa el buscador y estas preguntas. Si no encuentras la respuesta, escríbenos al correo de contacto que está al final de esta página." }
@@ -708,6 +744,7 @@ const CONFIG = {
     tutoriales: ['--e2', '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5l4.5 2.5-4.5 2.5z"/>'],
     calendario: ['--e1', '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>'],
     asesorias: ['--e4', '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12"/>'],
+    whatsapp: ['--e4', '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/>'],
     embajadoras: ['--e5', '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>'],
     complica: ['--alert', '<path d="M12 3.5l9 16H3z"/><path d="M12 10v4M12 17v.01"/>']
   };
@@ -1051,6 +1088,21 @@ const CONFIG = {
   cc.textContent = CONFIG.contacto.correo; cc.href = "mailto:" + CONFIG.contacto.correo;
   const cc2 = document.getElementById("contacto-correo2");
   cc2.textContent = CONFIG.contacto.correo2; cc2.href = "mailto:" + CONFIG.contacto.correo2;
+
+  // WhatsApp de mentores: cualquier liga a #whatsapp abre la ventanita (no se publica la liga del grupo)
+  const wa = CONFIG.whatsapp, ventana = document.getElementById("ventana-wa");
+  document.getElementById("wa-texto").textContent = wa.texto;
+  document.getElementById("wa-sinliga").textContent = wa.sinLiga;
+  const waCorreo = document.getElementById("wa-correo");
+  waCorreo.textContent = wa.boton;
+  waCorreo.href = `mailto:${CONFIG.contacto.correo}?subject=${encodeURIComponent(wa.correoAsunto)}&body=${encodeURIComponent(wa.correoTexto)}`;
+  const abrirWA = () => { if (!ventana.open) ventana.showModal(); };
+  ventana.querySelector(".cerrar").addEventListener("click", () => ventana.close());
+  ventana.addEventListener("click", ev => { if (ev.target === ventana) ventana.close(); }); // clic afuera la cierra
+  document.addEventListener("click", ev => {
+    if (ev.target.closest('a[href="#whatsapp"]')){ ev.preventDefault(); abrirWA(); }
+  });
+  if (location.hash === "#whatsapp") abrirWA();
 
   // Si alguien llega a "Cuando algo se complica" o "Cómo nos comunicamos" con una liga (#complica),
   // la sección se abre sola para que no se quede viendo la tarjeta cerrada.
