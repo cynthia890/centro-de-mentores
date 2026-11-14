@@ -51,7 +51,7 @@ Logos, banner, título y bienvenida, accesos rápidos, Avisos, ¿Dónde estoy en
 ## Pendientes
 
 - Llenar las ligas de los recursos (hoy casi todas están en `"#"`).
-- Poner las fechas reales de cada etapa (hoy dicen "Fechas por confirmar").
+- Fechas de etapas: ya están, tomadas del timeline oficial de la temporada 2027 (registro 11 mar, inicio recomendado 10 feb, entrega 5 may, 1ª ronda 11 may–7 jun, semifinalistas 14 jun, 2ª ronda 15–28 jun, celebración virtual 2 jul, World Summit por confirmar). Son estimadas: el inicio de Entrada y Vinculación, el fin de Aprendizaje y el inicio de Entregas ("abr"). Confirmar con Cynn cuando haya fechas de capacitación.
 - Conectar la hoja de avisos: pegar en `avisosHoja` la liga CSV cuando Cynn la publique.
 - Poner la liga del Classroom de talleres virtuales (`grab-talleres`) y de los videos de Tutoriales.
 - Idea a futuro: que la lista de recursos también se lea desde la Google Sheet, en una pestaña "Recursos".
