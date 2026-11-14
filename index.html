@@ -74,16 +74,17 @@ a{color:inherit}
 .quick .ico{flex:none;width:2.6rem;height:2.6rem;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 22%,var(--surface));color:var(--ink)}
 .quick .ico svg{width:1.35rem;height:1.35rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 /* Ventanita del WhatsApp de mentores */
-.ventana{width:min(28rem,calc(100% - 2rem));max-height:calc(100% - 2rem);overflow:auto;padding:1.75rem 1.5rem 1.5rem;border:1px solid var(--line);border-top:8px solid var(--e4);border-radius:22px;background:var(--surface);color:var(--ink);box-shadow:0 20px 50px rgba(29,19,73,.3)}
+.ventana{width:min(28rem,calc(100% - 2rem));max-height:calc(100% - 2rem);overflow:auto;padding:1.75rem 1.5rem 1.5rem;border:1px solid var(--line);border-top:8px solid var(--c, var(--e4));border-radius:22px;background:var(--surface);color:var(--ink);box-shadow:0 20px 50px rgba(29,19,73,.3)}
 .ventana::backdrop{background:rgba(29,19,73,.55)}
 .ventana .cerrar{position:absolute;top:.85rem;right:.85rem;width:2.2rem;height:2.2rem;border-radius:50%;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:1rem;cursor:pointer}
 .ventana .cerrar:hover{border-color:var(--ink)}
-.ventana .wa-ico{width:2.8rem;height:2.8rem;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--e4) 22%,var(--surface));margin-bottom:.75rem}
+.ventana .wa-ico{width:2.8rem;height:2.8rem;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--c, var(--e4)) 22%,var(--surface));margin-bottom:.75rem}
 .ventana .wa-ico svg{width:1.4rem;height:1.4rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ventana h2{font-family:var(--display);font-weight:800;font-size:1.45rem;line-height:1.15;margin:0 0 .5rem;padding-right:2rem}
 .ventana p{margin:0}
 .ventana .wa-caja{margin-top:1.1rem;padding:1rem 1.1rem;border-radius:14px;background:var(--paper);border:1px dashed var(--line);display:grid;gap:.8rem;justify-items:start}
 .ventana .wa-caja p{color:var(--ink-soft)}
+.ventana .wa-caja strong{color:var(--ink)}
 .ventana .wa-btn{font-weight:700;text-decoration:none;padding:.65rem 1.2rem;border-radius:999px;background:var(--ink);color:var(--paper)}
 .ventana .wa-btn:hover{background:var(--e4);color:#1D1349}
 .quick a.alerta{background:var(--alert-bg);color:var(--alert)}
@@ -398,6 +399,14 @@ body.vista-tuto .quick, body.vista-tuto .como, body.vista-tuto .bienvenida{displ
     </div>
   </dialog>
 
+<dialog class="ventana" id="ventana-quiz" aria-labelledby="quiz-titulo" style="--c:var(--e6)">
+    <button type="button" class="cerrar" aria-label="Cerrar">✕</button>
+    <span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M9 3.5h6v2.5H9z"/><path d="M8.5 12l2 2 4-4M8.5 17.5h7"/></svg></span>
+    <h2 id="quiz-titulo"></h2>
+    <p id="quiz-texto"></p>
+    <div class="wa-caja"><p><strong id="quiz-importante"></strong></p></div>
+  </dialog>
+
 <main class="wrap">
   <section class="seccion" id="avisos" aria-labelledby="t-avisos" hidden>
     <div class="avisos">
@@ -552,6 +561,7 @@ const CONFIG = {
      - tipo: importante, fecha o general. */
   avisosHoja: "",
   avisosEjemplo: [
+    { fecha: "2026-11-13", tipo: "importante", titulo: "Estamos trabajando en el quiz de evaluación", texto: "Muy pronto lo publicamos. Para que te podamos vincular con un equipo, necesitas aprobarlo con al menos 80%." },
     { fecha: "2026-11-12", tipo: "fecha", titulo: "Abre el registro en la plataforma global", texto: "Ya puedes registrarte como mentor en la plataforma de Technovation y empezar tu etapa de Entrada.", liga: "https://my.technovation.org/", texto_liga: "Ir a la plataforma" },
     { fecha: "2026-11-11", tipo: "general", titulo: "¡Estrenamos Centro de Mentores!", texto: "Todo lo que necesitas para la temporada, ahora en un solo lugar." },
     { fecha: "2026-11-10", tipo: "importante", titulo: "La capacitación de mentores será en enero", texto: "Muy pronto compartimos las fechas para que te registres." }
@@ -563,8 +573,16 @@ const CONFIG = {
     { texto: "Calendario de talleres", recurso: "calendario" },
     { texto: "WhatsApp de mentores", liga: "#whatsapp", icono: "whatsapp" },
     { texto: "Mi líder de club", recurso: "embajadoras" },
-    { texto: "Cuando algo se complica", liga: "#complica", alerta: true }
+    // Mientras el quiz tenga liga "#", este botón abre la ventanita de quizAviso; con liga, va directo al quiz
+    { texto: "Quiz de evaluación", recurso: "quiz", icono: "quiz" }
   ],
+
+  // Ventanita del botón "Quiz de evaluación" mientras el quiz no tiene liga
+  quizAviso: {
+    titulo: "Quiz de evaluación",
+    texto: "Estamos trabajando en el quiz. Muy pronto lo vas a encontrar aquí mismo.",
+    importante: "Para que te podamos vincular con un equipo, necesitas aprobarlo con al menos 80%."
+  },
 
   /* WHATSAPP DE MENTORES
      El botón de arriba abre una ventanita con estas indicaciones. La liga del
@@ -747,11 +765,14 @@ const CONFIG = {
     asesorias: ['--e4', '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12"/>'],
     whatsapp: ['--e4', '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/>'],
     embajadoras: ['--e5', '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>'],
+    quiz: ['--e6', '<rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M9 3.5h6v2.5H9z"/><path d="M8.5 12l2 2 4-4M8.5 17.5h7"/>'],
     complica: ['--alert', '<path d="M12 3.5l9 16H3z"/><path d="M12 10v4M12 17v.01"/>']
   };
   document.getElementById("accesos").innerHTML = CONFIG.accesos.map(a => {
     const [color, svg] = ICONOS[a.icono || a.recurso || "complica"] || ['--ink', ''];
-    return `<li><a href="${esc(ligaDe(a))}"${a.alerta ? ' class="alerta"' : ""} style="--c:var(${color})"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24">${svg}</svg></span>${esc(a.texto)}</a></li>`;
+    let liga = ligaDe(a);
+    if (a.recurso === "quiz" && (!liga || liga === "#")) liga = "#quiz-aviso";
+    return `<li><a href="${esc(liga)}"${a.alerta ? ' class="alerta"' : ""} style="--c:var(${color})"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24">${svg}</svg></span>${esc(a.texto)}</a></li>`;
   }).join("");
 
   function tarjeta(r, conEtapa){
@@ -1104,6 +1125,17 @@ const CONFIG = {
     if (ev.target.closest('a[href="#whatsapp"]')){ ev.preventDefault(); abrirWA(); }
   });
   if (location.hash === "#whatsapp") abrirWA();
+
+  // Quiz de evaluación: mientras no tenga liga, el botón abre una ventanita con el anuncio
+  const qa = CONFIG.quizAviso, ventanaQuiz = document.getElementById("ventana-quiz");
+  document.getElementById("quiz-titulo").textContent = qa.titulo;
+  document.getElementById("quiz-texto").textContent = qa.texto;
+  document.getElementById("quiz-importante").textContent = qa.importante;
+  ventanaQuiz.querySelector(".cerrar").addEventListener("click", () => ventanaQuiz.close());
+  ventanaQuiz.addEventListener("click", ev => { if (ev.target === ventanaQuiz) ventanaQuiz.close(); });
+  document.addEventListener("click", ev => {
+    if (ev.target.closest('a[href="#quiz-aviso"]')){ ev.preventDefault(); if (!ventanaQuiz.open) ventanaQuiz.showModal(); }
+  });
 
   // Si alguien llega a "Cuando algo se complica" o "Cómo nos comunicamos" con una liga (#complica),
   // la sección se abre sola para que no se quede viendo la tarjeta cerrada.
