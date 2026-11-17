@@ -188,6 +188,17 @@ body{overflow-x:clip}
 .pasos label{cursor:pointer;line-height:1.45}
 .pasos li.hecho label .t{text-decoration:line-through;text-decoration-color:var(--done);color:var(--ink-soft)}
 .nota{display:block;font-size:.9rem;color:var(--ink-soft);margin-top:.15rem}
+.paso-txt{min-width:0}
+.info-btn{display:inline-grid;place-items:center;width:1.45rem;height:1.45rem;margin-left:.4rem;padding:0;border-radius:50%;border:2px solid var(--c);background:var(--surface);color:var(--ink);font-family:var(--display);font-weight:800;font-size:.8rem;line-height:1;cursor:pointer;vertical-align:.1em}
+.info-btn:hover{background:color-mix(in srgb,var(--c) 30%,var(--surface))}
+.info-btn[aria-expanded="true"]{background:var(--c);color:var(--on)}
+.burbuja{grid-column:2 / -1;position:relative;margin-top:.35rem;padding:1rem 1.15rem;border-radius:14px;background:color-mix(in srgb,var(--c) 14%,var(--surface));border:1.5px solid color-mix(in srgb,var(--c) 55%,var(--line));font-size:.93rem;line-height:1.45}
+.burbuja::before{content:"";position:absolute;top:-8px;left:1.5rem;width:13px;height:13px;background:inherit;border-left:inherit;border-top:inherit;transform:rotate(45deg)}
+.burbuja[hidden]{display:none}
+.burbuja dl{margin:0;display:grid;gap:.6rem}
+.burbuja dt{font-weight:700;color:var(--ink)}
+.burbuja dd{margin:.1rem 0 0;color:var(--ink-soft)}
+@media (max-width:600px){.burbuja{grid-column:1 / -1}}
 .opc{display:inline-block;font-size:.75rem;font-weight:700;border:1.5px solid var(--ink-soft);color:var(--ink-soft);border-radius:999px;padding:0 .5rem;margin-right:.35rem;vertical-align:.1em}
 .ir{font-weight:700;font-size:.9rem;text-decoration:underline;text-decoration-color:var(--c);text-decoration-thickness:3px;text-underline-offset:4px;color:var(--ink);white-space:nowrap;padding:.1rem .2rem}
 .ir:hover{color:var(--alert)}
@@ -682,7 +693,16 @@ const CONFIG = {
       resumen: "Te preparas para mentorear: capacitación global, sesión con Mentoralia y quiz. Al acreditarlo, ya puedes vincularte con un equipo.",
       pasos: [
         { texto: "Completa la capacitación global de Technovation (6 módulos)", recurso: "capacitacion-global" },
-        { texto: "Completa tu perfil y tu background check en la plataforma global", nota: "El background check es requisito para mentores en México desde esta temporada; sin él no puedes vincularte. Si tienes dudas, revisa los tutoriales de la plataforma.", recurso: "background" },
+        { texto: "Completa tu perfil en la plataforma global", nota: "Si tienes dudas, revisa los tutoriales de la plataforma.", recurso: "plataforma" },
+        /* "info" muestra un botón ⓘ que abre una burbuja con la explicación del paso.
+           OJO: si agregas o quitas pasos, las palomitas guardadas se recorren. */
+        { texto: "Completa tu background check", nota: "Es requisito para vincularte con un equipo. Toca la ⓘ para saber de qué se trata.", recurso: "background",
+          info: [
+            { t: "¿Qué es?", r: "Desde esta temporada, Technovation Global pide a todos los mentores, también en México, completar un background check (verificación de antecedentes) como parte de su registro en la plataforma global." },
+            { t: "¿Cómo se hace?", r: "Según el país, con Checkr, la empresa socia de Technovation, o subiendo documentos que cumplan los requisitos locales. Todavía falta confirmar cuál de las dos opciones aplica en México; te avisaremos en cuanto lo sepamos." },
+            { t: "¿Quién lo hace?", r: "Tú lo completas por tu cuenta y Technovation HQ lo gestiona. Si tienes dudas, escribe a Megan y Rae en volunteers@technovation.org. Mentoralia te avisa y te acompaña en el proceso." },
+            { t: "¿Por qué es importante?", r: "Sin él no puedes vincularte con un equipo: forma parte de los procedimientos de seguridad estudiantil de Technovation para proteger a las participantes." }
+          ] },
         { texto: "Regístrate a la sesión sincrónica (Zoom) MX", nota: "Sábado 9 de enero de 2027, 9:00 h (hora del centro de México).", recurso: "zoom-registro" },
         { texto: "Asiste a la sesión, o ve la grabación si no pudiste", recurso: "grabacion" },
         { texto: "Contesta el quiz y la evaluación (mínimo 80%)", nota: "Al terminarlo te damos la liga del WhatsApp de mentores. Si ya lo hiciste y no la tienes, pídenosla desde el botón WhatsApp de mentores de arriba. Si acreditas, ¡ya puedes vincularte con un equipo!", recurso: "quiz" },
@@ -742,7 +762,7 @@ const CONFIG = {
     { p: "¿Con quién veo los temas de mi equipo?", r: "Con tu líder de club: horarios, integrantes, avances o cualquier situación del día a día. Si mentoreas en el Club Virtual, tu líder de club es Mentoralia." },
     { p: "¿Cuáles son las fechas importantes de la temporada?", r: "11 de marzo de 2027: último día para registrar formalmente al equipo (estudiantes y mentores). 10 de febrero: fecha recomendada para iniciar el proyecto. 5 de mayo: fecha límite de entrega. 11 de mayo al 7 de junio: primera ronda de evaluación (cuartos de final). 14 de junio: anuncio de semifinalistas globales. 15 al 28 de junio: segunda ronda (semifinales). 2 de julio: celebración virtual con el anuncio de finalistas y ganadoras regionales. La fecha del World Summit está por confirmar." },
     { p: "¿Cómo me asignan un equipo?", r: "Mentoralia te asigna a un equipo ya formado, en dupla con otro mentor. Tienes 3 semanas después de la capacitación para quedar vinculado." },
-    { p: "¿Es obligatorio el background check?", r: "Sí. Desde esta temporada es requisito para todos los mentores en México, y sin él no puedes vincularte con un equipo." },
+    { p: "¿Es obligatorio el background check?", r: "Sí. Desde esta temporada Technovation Global lo pide a todos los mentores, también en México, y sin él no puedes vincularte con un equipo. Lo completas por tu cuenta en la plataforma global; si tienes dudas, escribe a volunteers@technovation.org." },
     { p: "¿Cómo me uno al WhatsApp de mentores?", r: "Te damos la liga al terminar el quiz de evaluación de la capacitación (etapa de Entrada). Si ya lo hiciste y no la tienes, toca el botón «WhatsApp de mentores» de arriba y mándanos un correo; ya va con el texto escrito." },
     { p: "¿Puedo escribirle directo a una estudiante?", r: "No. La comunicación es siempre en grupo, con sus compañeras y sus familias, y en los correos se copia a madres, padres o tutores. Tampoco se intercambian números de teléfono." },
     { p: "¿Cómo obtengo mi certificado de participación?", r: "Al cierre de la temporada lo descargas siguiendo la guía de la etapa de Celebración." },
@@ -770,6 +790,17 @@ const CONFIG = {
   let actual = etapas.findIndex(e => e.id === CONFIG.etapaActual);
   if (actual < 0) actual = 0;
   let elegida = actual;
+
+  // Una sola vez: en nov 2026 el background check se volvió un paso aparte (paso 3 de Entrada).
+  // Recorre las palomitas que ya tenían guardadas los pasos 3 a 6 para que no se desacomoden.
+  if (store.get("cm2027:migr-bg") !== "1"){
+    for (let j = 5; j >= 2; j--){
+      const v = store.get(`cm2027:entrada:${j}`);
+      store.set(`cm2027:entrada:${j+1}`, v === "1" ? "1" : "0");
+    }
+    store.set("cm2027:entrada:2", "0");
+    store.set("cm2027:migr-bg", "1");
+  }
 
   // Accesos rápidos
   const ICONOS = {
@@ -800,15 +831,25 @@ const CONFIG = {
 
   function listaPasos(pasos, prefijo){
     return `<ol class="pasos">` + pasos.map((s,j) => {
-      const k = `${prefijo}:${j}`, on = store.get(k) === "1", l = ligaDe(s);
+      const k = `${prefijo}:${j}`, on = store.get(k) === "1", l = ligaDe(s), bid = `info-${prefijo.replace(/\W/g, "")}-${j}`;
       return `<li class="${on ? "hecho" : ""}">
         <input type="checkbox" id="${k}" data-k="${k}" ${on ? "checked" : ""} aria-label="Marcar paso ${j+1} como hecho">
-        <label for="${k}">${s.opcional ? '<span class="opc">Opcional</span>' : ""}<span class="t">${esc(s.texto)}</span>
-        ${s.nota ? `<span class="nota">${esc(s.nota)}</span>` : ""}</label>
+        <span class="paso-txt"><label for="${k}">${s.opcional ? '<span class="opc">Opcional</span>' : ""}<span class="t">${esc(s.texto)}</span></label>${s.info ? `<button type="button" class="info-btn" aria-expanded="false" aria-controls="${bid}" aria-label="Más información sobre este paso">i</button>` : ""}
+        ${s.nota ? `<label for="${k}" class="nota">${esc(s.nota)}</label>` : ""}</span>
         ${l ? `<a class="ir" href="${esc(l)}">Abrir</a>` : "<span></span>"}
+        ${s.info ? `<div class="burbuja" id="${bid}" hidden><dl>${s.info.map(x => `<dt>${esc(x.t)}</dt><dd>${esc(x.r)}</dd>`).join("")}</dl></div>` : ""}
       </li>`;
     }).join("") + `</ol>`;
   }
+
+  // Burbuja de información de un paso (botón ⓘ)
+  document.addEventListener("click", ev => {
+    const b = ev.target.closest(".info-btn"); if (!b) return;
+    ev.preventDefault();
+    const burbuja = document.getElementById(b.getAttribute("aria-controls"));
+    const abrir = burbuja.hidden;
+    burbuja.hidden = !abrir; b.setAttribute("aria-expanded", abrir);
+  });
 
   function activarPasos(cont, pasos, prefijo){
     const contar = () => {

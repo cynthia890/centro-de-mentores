@@ -26,7 +26,8 @@ Todo vive en un solo archivo: `index.html` (HTML, CSS y JavaScript juntos; las i
 - **Asesorías de programación** empiezan en marzo; por eso no están en los accesos rápidos (sí en su etapa y en el buscador). "Cuando algo se complica" tampoco está en los accesos rápidos (se quitó a pedido de Cynn), pero su sección sigue en la página.
 - **Quiz de evaluación** (acceso rápido): mientras el recurso `quiz` tenga liga `"#"`, el botón abre una ventanita con el anuncio de `CONFIG.quizAviso` (estamos trabajando en él; se necesita al menos 80% para vincularse). En cuanto el quiz tenga liga, el botón lleva directo al quiz.
 - **Buscador**: busca en título, descripción y `palabras`, sin importar acentos. Las palabras clave incluyen sinónimos coloquiales (por ejemplo "permiso papas" encuentra el permiso de papás). Los filtros por etapa y tipo existen pero están ocultos a propósito.
-- Las palomitas de los pasos se guardan en localStorage del navegador de cada mentor (claves `cm2027:...`).
+- Las palomitas de los pasos se guardan en localStorage del navegador de cada mentor (claves `cm2027:<etapa>:<número de paso>`). Si agregas o quitas pasos, las palomitas se recorren: en nov 2026 se separó el background check como paso 3 de Entrada y una migración única (`cm2027:migr-bg`) recorrió las palomitas guardadas.
+- Un paso puede llevar `info: [{ t, r }]`: se muestra un botón ⓘ que abre una burbuja con preguntas y respuestas (hoy lo usa el paso del background check). Del background check aún falta confirmar si en México es con Checkr o con documentos; dudas a volunteers@technovation.org (Megan y Rae).
 
 ## Orden de la página
 
