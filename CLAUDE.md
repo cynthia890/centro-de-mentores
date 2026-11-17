@@ -37,7 +37,8 @@ Logos, banner, título y bienvenida, accesos rápidos, Avisos, ¿Dónde estoy en
 - Paleta TGMX (de Andy, diseño de Mentoralia): fondo `#EDEDED`, texto `#1D1349`, magenta `#EB0089`, amarillo `#FDB71C`, azul `#0076CF`, verde `#42B12A`, naranja `#FF7400`.
 - Colores por etapa: Entrada amarillo, Vinculación naranja, Aprendizaje azul, Entregas verde, Competencia morado, Celebración magenta. El magenta también marca seguridad y "Cuando algo se complica".
 - Tipografías: Bricolage Grotesque (títulos) y Atkinson Hyperlegible (texto).
-- Tiene modo oscuro y está pensado para celular.
+- Tiene modo oscuro y está pensado para celular. En computadora hay un botón "Modo oscuro / Modo claro" junto al logo de Mentoralia (la elección se guarda en `cm2027:tema`); en celular se sigue el modo del teléfono.
+- Las fechas de cada etapa se ven como pastillas con el color de su etapa, también en la etapa actual (junto a "Estás aquí").
 - Tono relajado y cálido ("¡Oh-oh! No encontramos lo que buscas", "tú tranquilo/a"), excepto en seguridad, que se mantiene serio.
 
 ## Reglas de contenido
