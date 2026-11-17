@@ -191,7 +191,7 @@ body{overflow-x:clip}
 .paso-txt{min-width:0}
 .info-btn{display:inline-grid;place-items:center;width:1.45rem;height:1.45rem;margin-left:.4rem;padding:0;border-radius:50%;border:2px solid var(--c);background:var(--surface);color:var(--ink);font-family:var(--display);font-weight:800;font-size:.8rem;line-height:1;cursor:pointer;vertical-align:.1em}
 .info-btn:hover{background:color-mix(in srgb,var(--c) 30%,var(--surface))}
-.info-btn[aria-expanded="true"]{background:var(--c);color:var(--on)}
+.info-btn[aria-expanded="true"]{background:var(--c);color:var(--on, #1D1349)}
 .burbuja{grid-column:2 / -1;position:relative;margin-top:.35rem;padding:1rem 1.15rem;border-radius:14px;background:color-mix(in srgb,var(--c) 14%,var(--surface));border:1.5px solid color-mix(in srgb,var(--c) 55%,var(--line));font-size:.93rem;line-height:1.45}
 .burbuja::before{content:"";position:absolute;top:-8px;left:1.5rem;width:13px;height:13px;background:inherit;border-left:inherit;border-top:inherit;transform:rotate(45deg)}
 .burbuja[hidden]{display:none}
@@ -199,6 +199,7 @@ body{overflow-x:clip}
 .burbuja dt{font-weight:700;color:var(--ink)}
 .burbuja dd{margin:.1rem 0 0;color:var(--ink-soft)}
 @media (max-width:600px){.burbuja{grid-column:1 / -1}}
+.recurso .burbuja{grid-column:1 / -1;margin-top:.6rem}
 .opc{display:inline-block;font-size:.75rem;font-weight:700;border:1.5px solid var(--ink-soft);color:var(--ink-soft);border-radius:999px;padding:0 .5rem;margin-right:.35rem;vertical-align:.1em}
 .ir{font-weight:700;font-size:.9rem;text-decoration:underline;text-decoration-color:var(--c);text-decoration-thickness:3px;text-underline-offset:4px;color:var(--ink);white-space:nowrap;padding:.1rem .2rem}
 .ir:hover{color:var(--alert)}
@@ -679,7 +680,15 @@ const CONFIG = {
     { id: "complica", titulo: "Cuando algo se complica", desc: "Qué hacer ante imprevistos con tu equipo, las familias o la plataforma.", etapa: "toda", tipo: "Guía", palabras: "problema ayuda conflicto imprevisto escalar", liga: "#complica" },
     { id: "faq", titulo: "Preguntas frecuentes", desc: "Respuestas rápidas a las dudas más comunes de los mentores.", etapa: "toda", tipo: "Guía", palabras: "faq dudas preguntas ayuda", liga: "#preguntas" },
 
-    { id: "background", titulo: "Cómo completar tu perfil y tu background check", desc: "Paso a paso para completar tu perfil y tu background check en la plataforma global. Es requisito para vincularte.", etapa: "entrada", tipo: "Video", tutorial: "plataforma", palabras: "perfil registro verificacion antecedentes requisito seguridad onboarding tutorial", liga: "https://my.technovation.org/" },
+    /* "info" (opcional) muestra un botón ⓘ con una burbuja de preguntas y respuestas
+       en la tarjeta del recurso (buscador, etapas, Tutoriales) y en el paso que lo use. */
+    { id: "background", titulo: "Cómo completar tu perfil y tu background check", desc: "Paso a paso para completar tu perfil y tu background check en la plataforma global. Es una medida para cuidar la seguridad de las participantes y un requisito para vincularte.", etapa: "entrada", tipo: "Video", tutorial: "plataforma", palabras: "perfil registro verificacion antecedentes requisito seguridad proteccion participantes checkr onboarding tutorial", liga: "https://my.technovation.org/",
+      info: [
+        { t: "¿Qué es?", r: "Desde esta temporada, Technovation Global pide a todos los mentores, también en México, completar un background check (verificación de antecedentes) como parte de su registro en la plataforma global." },
+        { t: "¿Por qué es importante?", r: "Es una medida para cuidar la seguridad de las participantes: forma parte de los procedimientos de seguridad estudiantil de Technovation. Por eso, sin él no puedes vincularte con un equipo." },
+        { t: "¿Cómo se hace?", r: "Según el país, con Checkr, la empresa socia de Technovation, o subiendo documentos que cumplan los requisitos locales. Todavía falta confirmar cuál de las dos opciones aplica en México; te avisaremos en cuanto lo sepamos." },
+        { t: "¿Quién lo hace?", r: "Tú lo completas por tu cuenta y Technovation HQ lo gestiona. Si tienes dudas, escribe a Megan y Rae en volunteers@technovation.org. Mentoralia te avisa y te acompaña en el proceso." }
+      ] },
     { id: "acuerdo-equipo", titulo: "Acuerdo de trabajo con tu equipo", desc: "Para ponerse de acuerdo con tu equipo en cómo van a trabajar juntos durante la temporada.", etapa: "vinculacion", tipo: "Documento", palabras: "acuerdo trabajo equipo reglas compromisos convivencia dupla", liga: "https://drive.google.com/file/d/1EFSeuPitRLOrx7Idy0BSZuXAHsB_DQrw/view?usp=sharing" },
     { id: "guia-entregables", titulo: "Guía de entregables", desc: "Qué incluye cada entregable, con los cambios de esta temporada: ética, Business Canvas y video técnico.", etapa: "aprendizaje", tipo: "Guía", palabras: "entregables etica business canvas video tecnico pitch requisitos", liga: "#" },
     { id: "banco-casos", titulo: "Banco de casos prácticos", desc: "Los casos de la capacitación, para consultarlos cuando enfrentes una situación real.", etapa: "aprendizaje", tipo: "Documento", palabras: "casos practica ejemplos situaciones", liga: "#" },
@@ -694,15 +703,9 @@ const CONFIG = {
       pasos: [
         { texto: "Completa la capacitación global de Technovation (6 módulos)", recurso: "capacitacion-global" },
         { texto: "Completa tu perfil en la plataforma global", nota: "Si tienes dudas, revisa los tutoriales de la plataforma.", recurso: "plataforma" },
-        /* "info" muestra un botón ⓘ que abre una burbuja con la explicación del paso.
+        /* La burbuja ⓘ de este paso toma la "info" del recurso "background".
            OJO: si agregas o quitas pasos, las palomitas guardadas se recorren. */
-        { texto: "Completa tu background check", nota: "Es requisito para vincularte con un equipo. Toca la ⓘ para saber de qué se trata.", recurso: "background",
-          info: [
-            { t: "¿Qué es?", r: "Desde esta temporada, Technovation Global pide a todos los mentores, también en México, completar un background check (verificación de antecedentes) como parte de su registro en la plataforma global." },
-            { t: "¿Cómo se hace?", r: "Según el país, con Checkr, la empresa socia de Technovation, o subiendo documentos que cumplan los requisitos locales. Todavía falta confirmar cuál de las dos opciones aplica en México; te avisaremos en cuanto lo sepamos." },
-            { t: "¿Quién lo hace?", r: "Tú lo completas por tu cuenta y Technovation HQ lo gestiona. Si tienes dudas, escribe a Megan y Rae en volunteers@technovation.org. Mentoralia te avisa y te acompaña en el proceso." },
-            { t: "¿Por qué es importante?", r: "Sin él no puedes vincularte con un equipo: forma parte de los procedimientos de seguridad estudiantil de Technovation para proteger a las participantes." }
-          ] },
+        { texto: "Completa tu background check", nota: "Es una medida para cuidar la seguridad de las participantes y un requisito para vincularte con un equipo. Toca la ⓘ para saber más.", recurso: "background" },
         { texto: "Regístrate a la sesión sincrónica (Zoom) MX", nota: "Sábado 9 de enero de 2027, 9:00 h (hora del centro de México).", recurso: "zoom-registro" },
         { texto: "Asiste a la sesión, o ve la grabación si no pudiste", recurso: "grabacion" },
         { texto: "Contesta el quiz y la evaluación (mínimo 80%)", nota: "Al terminarlo te damos la liga del WhatsApp de mentores. Si ya lo hiciste y no la tienes, pídenosla desde el botón WhatsApp de mentores de arriba. Si acreditas, ¡ya puedes vincularte con un equipo!", recurso: "quiz" },
@@ -762,7 +765,7 @@ const CONFIG = {
     { p: "¿Con quién veo los temas de mi equipo?", r: "Con tu líder de club: horarios, integrantes, avances o cualquier situación del día a día. Si mentoreas en el Club Virtual, tu líder de club es Mentoralia." },
     { p: "¿Cuáles son las fechas importantes de la temporada?", r: "11 de marzo de 2027: último día para registrar formalmente al equipo (estudiantes y mentores). 10 de febrero: fecha recomendada para iniciar el proyecto. 5 de mayo: fecha límite de entrega. 11 de mayo al 7 de junio: primera ronda de evaluación (cuartos de final). 14 de junio: anuncio de semifinalistas globales. 15 al 28 de junio: segunda ronda (semifinales). 2 de julio: celebración virtual con el anuncio de finalistas y ganadoras regionales. La fecha del World Summit está por confirmar." },
     { p: "¿Cómo me asignan un equipo?", r: "Mentoralia te asigna a un equipo ya formado, en dupla con otro mentor. Tienes 3 semanas después de la capacitación para quedar vinculado." },
-    { p: "¿Es obligatorio el background check?", r: "Sí. Desde esta temporada Technovation Global lo pide a todos los mentores, también en México, y sin él no puedes vincularte con un equipo. Lo completas por tu cuenta en la plataforma global; si tienes dudas, escribe a volunteers@technovation.org." },
+    { p: "¿Es obligatorio el background check?", r: "Sí. Desde esta temporada Technovation Global lo pide a todos los mentores, también en México. Es una medida para cuidar la seguridad de las participantes, y sin él no puedes vincularte con un equipo. Lo completas por tu cuenta en la plataforma global; si tienes dudas, escribe a volunteers@technovation.org." },
     { p: "¿Cómo me uno al WhatsApp de mentores?", r: "Te damos la liga al terminar el quiz de evaluación de la capacitación (etapa de Entrada). Si ya lo hiciste y no la tienes, toca el botón «WhatsApp de mentores» de arriba y mándanos un correo; ya va con el texto escrito." },
     { p: "¿Puedo escribirle directo a una estudiante?", r: "No. La comunicación es siempre en grupo, con sus compañeras y sus familias, y en los correos se copia a madres, padres o tutores. Tampoco se intercambian números de teléfono." },
     { p: "¿Cómo obtengo mi certificado de participación?", r: "Al cierre de la temporada lo descargas siguiendo la guía de la etapa de Celebración." },
@@ -820,17 +823,24 @@ const CONFIG = {
     return `<li><a href="${esc(liga)}"${a.alerta ? ' class="alerta"' : ""} style="--c:var(${color})"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24">${svg}</svg></span>${esc(a.texto)}</a></li>`;
   }).join("");
 
+  // Botón ⓘ y burbuja de información (para pasos y tarjetas de recursos con "info")
+  let nInfo = 0;
+  const infoBtn = id => `<button type="button" class="info-btn" aria-expanded="false" aria-controls="${id}" aria-label="Más información">i</button>`;
+  const infoBurbuja = (id, info) => `<div class="burbuja" id="${id}" hidden><dl>${info.map(x => `<dt>${esc(x.t)}</dt><dd>${esc(x.r)}</dd>`).join("")}</dl></div>`;
+
   function tarjeta(r, conEtapa){
-    const color = etapaColor[r.etapa] || "--ink";
+    const color = etapaColor[r.etapa] || "--ink", bid = r.info ? `info-r-${++nInfo}` : "";
     return `<li class="recurso" style="--c:var(${color})">
-      <span class="rt">${esc(r.titulo)}</span>
+      <span class="rt">${esc(r.titulo)}${r.info ? infoBtn(bid) : ""}</span>
       <span class="rd">${esc(r.desc)}</span>
       <span class="meta"><span class="etq">${esc(r.tipo)}</span>${conEtapa ? `<span class="etq">${esc(etapaNombre[r.etapa] || "")}</span>` : ""}</span>
-      <a class="ir" href="${esc(r.liga)}">Abrir</a></li>`;
+      <a class="ir" href="${esc(r.liga)}">Abrir</a>${r.info ? infoBurbuja(bid, r.info) : ""}</li>`;
   }
 
   function listaPasos(pasos, prefijo){
     return `<ol class="pasos">` + pasos.map((s,j) => {
+      const info = s.info || (s.recurso && R[s.recurso] && R[s.recurso].info);
+      s = { ...s, info };
       const k = `${prefijo}:${j}`, on = store.get(k) === "1", l = ligaDe(s), bid = `info-${prefijo.replace(/\W/g, "")}-${j}`;
       return `<li class="${on ? "hecho" : ""}">
         <input type="checkbox" id="${k}" data-k="${k}" ${on ? "checked" : ""} aria-label="Marcar paso ${j+1} como hecho">
