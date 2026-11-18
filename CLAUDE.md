@@ -36,12 +36,13 @@ Logos, banner, título y bienvenida, accesos rápidos, Avisos, ¿Dónde estoy en
 
 ## Diseño
 
-- Paleta TGMX (de Andy, diseño de Mentoralia): fondo `#EDEDED`, texto `#1D1349`, magenta `#EB0089`, amarillo `#FDB71C`, azul `#0076CF`, verde `#42B12A`, naranja `#FF7400`.
+- **Colores: solo los de la guía de Andy** ("Nueva identidad Technovation 2026-2027"). Fondo `#EDEDED`, tarjetas y barras en crema `#FAF4EC` (no se usa blanco), texto `#1D1349`, magenta `#EB0089`, amarillo `#FDB71C`, azul `#0076CF`, verde `#42B12A`, naranja `#FF7400`, morado `#8C72DE` (Competencia) y coral `#F28587` (cejas en modo oscuro). Excepciones a propósito, "tonos de apoyo web" pendientes de que Andy los sume a su guía: `#4D4672` texto secundario, `#D6D3DE` líneas, `#9C98AD` pasos completados, `#FCE1F0` fondo de alertas, y los fondos/textos del modo oscuro (`#120C2E`, `#352B66`, `#3A1240`, `#BDB8D3`, `#6C6690`).
 - Colores por etapa: Entrada amarillo, Vinculación naranja, Aprendizaje azul, Entregas verde, Competencia morado, Celebración magenta. El magenta también marca seguridad y "Cuando algo se complica".
-- Tipografías: Bricolage Grotesque (títulos) y Atkinson Hyperlegible (texto).
+- Tipografías (guía de Andy): **Rubik** 700 para títulos, **Instrument Sans** para textos y **Castoro cursiva** (clase `.enf`) para una palabra de cada título, del mismo color del título (estilo limpio y uniforme que prefiere Cynn). También van en Castoro cursiva el subtítulo "Technovation México 2027" (magenta) y la frase de cada etapa.
+- **Cejas**: etiqueta pequeña en mayúsculas arriba de los títulos de sección (clase `.ceja`), en magenta (coral en modo oscuro). Es el acento propio de Technovation México/Mentoralia.
 - Tiene modo oscuro y está pensado para celular. En computadora hay un botón "Modo oscuro / Modo claro" junto al logo de Mentoralia (la elección se guarda en `cm2027:tema`); en celular se sigue el modo del teléfono.
 - Las fechas de cada etapa se ven como pastillas con el color de su etapa, también en la etapa actual (junto a "Estás aquí").
-- **Identidad visual (comentario de María, nov 2026):** las páginas que Mentoralia va haciendo con IA deben alinearse con la identidad visual de Mentoralia. Andy ya tiene una guía, pero falta actualizarla para este tipo de páginas. Cuando exista la versión nueva, revisar este sitio contra ella antes de cambios grandes de diseño.
+- **Identidad visual (comentario de María, nov 2026):** las páginas hechas con IA deben alinearse con la identidad de Mentoralia. En nov 2026 el sitio se alineó a la guía de Andy (colores y tipografías de arriba). Cuando Andy actualice su guía, revisar el sitio contra la versión nueva.
 - Tono relajado y cálido ("¡Oh-oh! No encontramos lo que buscas", "tú tranquilo/a"), excepto en seguridad, que se mantiene serio.
 
 ## Reglas de contenido
