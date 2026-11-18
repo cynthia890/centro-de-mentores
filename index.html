@@ -900,9 +900,17 @@ const CONFIG = {
   // Cada paso guarda su palomita con su posición original en CONFIG (no cambia al separarlos).
   function listaPasos(pasos, prefijo){
     const unPaso = (s, j, n) => {
-      const info = s.info || (s.recurso && R[s.recurso] && R[s.recurso].info);
+      let info = s.info || (s.recurso && R[s.recurso] && R[s.recurso].info);
+      // Paso del quiz: su burbuja ⓘ usa los mismos textos que la ventanita del botón "Quiz de evaluación"
+      // (CONFIG.quizAviso). Mientras el quiz no tenga liga, su "Abrir" también abre esa ventanita.
+      let l = ligaDe(s);
+      if (s.recurso === "quiz" && !info){
+        const sinLiga = !l || l === "#";
+        info = (sinLiga ? [{ t: CONFIG.quizAviso.titulo, r: CONFIG.quizAviso.texto }] : []).concat([{ t: "Importante", r: CONFIG.quizAviso.importante }]);
+        if (sinLiga) l = "#quiz-aviso";
+      }
       s = { ...s, info };
-      const k = `${prefijo}:${j}`, on = store.get(k) === "1", l = ligaDe(s), bid = `info-${prefijo.replace(/\W/g, "")}-${j}`;
+      const k = `${prefijo}:${j}`, on = store.get(k) === "1", bid = `info-${prefijo.replace(/\W/g, "")}-${j}`;
       return `<li class="${on ? "hecho" : ""}">
         <input type="checkbox" id="${k}" data-k="${k}" ${on ? "checked" : ""} aria-label="Marcar ${s.opcional ? "el extra opcional" : `paso ${n}`} como hecho">
         <span class="paso-txt"><label for="${k}">${s.obligatorio ? '<span class="obl">Obligatorio</span>' : ""}<span class="t">${esc(s.texto)}</span></label>${s.info ? `<button type="button" class="info-btn" aria-expanded="false" aria-controls="${bid}" aria-label="Más información sobre este paso">i</button>` : ""}
