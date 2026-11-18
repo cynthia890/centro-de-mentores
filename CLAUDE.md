@@ -9,6 +9,7 @@ Sitio para los mentores voluntarios de Technovation México, hecho por Mentorali
 - Antes de un cambio grande de diseño o estructura, propón primero y espera su visto bueno. Los cambios pequeños (una liga, un texto) hazlos directo.
 - Después de cada cambio, revisa que la página no se rompa, haz commit con un mensaje claro en español y súbelo (push). Dile qué cambió.
 - Ella piensa como diseñadora UX/UI: cuida la estética, la legibilidad y que todo se vea consistente.
+- María es la jefa de Cynn en Mentoralia y revisa el sitio. Andy Lozano es quien lleva el diseño de Mentoralia y tiene la guía de identidad visual.
 
 ## Cómo está armado
 
@@ -40,6 +41,7 @@ Logos, banner, título y bienvenida, accesos rápidos, Avisos, ¿Dónde estoy en
 - Tipografías: Bricolage Grotesque (títulos) y Atkinson Hyperlegible (texto).
 - Tiene modo oscuro y está pensado para celular. En computadora hay un botón "Modo oscuro / Modo claro" junto al logo de Mentoralia (la elección se guarda en `cm2027:tema`); en celular se sigue el modo del teléfono.
 - Las fechas de cada etapa se ven como pastillas con el color de su etapa, también en la etapa actual (junto a "Estás aquí").
+- **Identidad visual (comentario de María, nov 2026):** las páginas que Mentoralia va haciendo con IA deben alinearse con la identidad visual de Mentoralia. Andy ya tiene una guía, pero falta actualizarla para este tipo de páginas. Cuando exista la versión nueva, revisar este sitio contra ella antes de cambios grandes de diseño.
 - Tono relajado y cálido ("¡Oh-oh! No encontramos lo que buscas", "tú tranquilo/a"), excepto en seguridad, que se mantiene serio.
 
 ## Reglas de contenido
@@ -48,6 +50,7 @@ Logos, banner, título y bienvenida, accesos rápidos, Avisos, ¿Dónde estoy en
 - Se dice "permiso de papás", no "parental consent".
 - Lo que tenga que ver con el equipo se ve con su líder de club; si no se resuelve, con Mentoralia. En el Club Virtual, el líder de club es Mentoralia.
 - El sitio es público. **Nunca** pongas la liga del WhatsApp de mentores ni ligas de Zoom de sesiones con las niñas. La liga del WhatsApp aparece en el mensaje de confirmación del quiz de Google Forms.
+- Directorio de líderes de club: https://hub.mentoralia.org/clubes (corrección de María; antes apuntaba a /club/red-de-clubes).
 - Requisitos para ser mentor: mayor de 18 años, de 2 a 4 horas a la semana, capacitación global (6 módulos), perfil y background check en la plataforma, capacitación de Mentoralia (en vivo o grabación) y quiz con mínimo 80%.
 - Contacto: cynthia@mentoralia.org (coordinación de mentores) e info@mentoralia.org.
 
