@@ -202,6 +202,14 @@ body{overflow-x:clip}
 @media (max-width:600px){.burbuja{grid-column:1 / -1}}
 .recurso .burbuja{grid-column:1 / -1;margin-top:.6rem}
 .opc{display:inline-block;font-size:.75rem;font-weight:700;border:1.5px solid var(--ink-soft);color:var(--ink-soft);border-radius:999px;padding:0 .5rem;margin-right:.35rem;vertical-align:.1em}
+.obl{display:inline-block;font-size:.75rem;font-weight:700;border:1.5px solid var(--alert);color:var(--alert);border-radius:999px;padding:0 .5rem;margin-right:.35rem;vertical-align:.1em}
+.ayuda-pasos{margin:-.35rem 0 .8rem;font-size:.9rem;color:var(--ink-soft)}
+.extra-opc{margin-top:1.1rem;padding:.6rem 1rem .2rem;border:1.5px dashed var(--line);border-radius:14px}
+.extra-t{margin:.2rem 0 0;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.pasos-opc li{border-top:0;padding:.6rem 0}
+.pasos-opc .t{color:var(--ink-soft)}
+.pasos-opc input{border-style:dashed}
+.pasos-opc input:not(:checked)::before{content:""}
 .ir{font-weight:700;font-size:.9rem;text-decoration:underline;text-decoration-color:var(--c);text-decoration-thickness:3px;text-underline-offset:4px;color:var(--ink);white-space:nowrap;padding:.1rem .2rem}
 .ir:hover{color:var(--alert)}
 .guardado{margin:1.5rem 0 0;font-size:.85rem;color:var(--ink-soft)}
@@ -310,6 +318,7 @@ body.vista-tuto .quick, body.vista-tuto .como, body.vista-tuto .bienvenida{displ
 .caso::before{content:"";position:absolute;inset:0 0 auto;height:5px;background:var(--c)}
 .caso:hover{transform:translateY(-3px);border-color:var(--c)}
 .caso h3{font-family:var(--display);font-weight:800;font-size:1.15rem;margin:0;line-height:1.2}
+.caso .primero{margin:-.35rem 0 0;padding:.35rem .7rem;border-radius:10px;background:color-mix(in srgb,var(--c) 18%,var(--surface));font-weight:700;font-size:.92rem;color:var(--ink)}
 .caso ul{list-style:none;margin:0;padding:0;display:grid;gap:.45rem;flex:1;align-content:start}
 .caso.otro{background:transparent;border:2px dashed var(--line);justify-content:center;align-items:flex-start}
 .caso.otro::before{display:none}
@@ -681,7 +690,7 @@ const CONFIG = {
     // Opcional: no se muestra en ningún lado mientras su liga sea "#"
     { id: "aceptar-vinculacion", titulo: "Cómo aceptar tu vinculación con el equipo en la plataforma", desc: "Paso a paso para aceptar la invitación de tu equipo en la plataforma global.", etapa: "vinculacion", tipo: "Video", tutorial: "plataforma", ocultarSinLiga: true, palabras: "aceptar vinculacion invitacion equipo plataforma tutorial", liga: "#" },
     { id: "perfil", titulo: "Cómo ayudar a tus estudiantes a completar su perfil", desc: "Lo que cada estudiante necesita tener listo en la plataforma.", etapa: "vinculacion", tipo: "Video", tutorial: "plataforma", palabras: "perfil registro estudiantes ninas tutorial", liga: "#" },
-    { id: "consent", titulo: "Cómo funciona el permiso de papás en la plataforma", desc: "Paso a paso del permiso de papás en la plataforma y cómo acompañar a las familias.", etapa: "vinculacion", tipo: "Guía", tutorial: "plataforma", palabras: "permiso papas padres consentimiento parental consent firma familias tutorial", liga: "https://docs.google.com/document/d/1l3p_nU0i9nseL5MA25hBMhV_ioy6lsoGyP-a9L51ZXk/edit?usp=sharing" },
+    { id: "consent", titulo: "Cómo funciona el permiso de papás en la plataforma", desc: "Paso a paso del permiso de papás en la plataforma y cómo acompañar a las familias.", etapa: "vinculacion", tipo: "Guía", tutorial: "plataforma", palabras: "permiso papas padres consentimiento parental consent firma familias tutorial papás no responden familia no firma no dan permiso problema con la familia", liga: "https://docs.google.com/document/d/1l3p_nU0i9nseL5MA25hBMhV_ioy6lsoGyP-a9L51ZXk/edit?usp=sharing" },
     { id: "primera-reunion", titulo: "Guía de primera reunión con tu equipo", desc: "Qué hacer y qué decir en el primer encuentro.", etapa: "vinculacion", tipo: "Guía", palabras: "primera sesion inicio conocer", liga: "#" },
 
     { id: "curr-estudiantes", titulo: "Currículum para estudiantes", desc: "El contenido que tu equipo va a trabajar, unidad por unidad.", etapa: "aprendizaje", tipo: "Documento", palabras: "curriculum ninas contenido unidades curriculo", liga: "https://technovationchallenge.org/technovation-curriculum/" },
@@ -713,7 +722,7 @@ const CONFIG = {
     { id: "cv-tracker", titulo: "Tracker de entregables del Club Virtual", desc: "Problema, ética, PMV, programación y pitch, antes del 5 de mayo.", etapa: "club", tipo: "Documento", palabras: "club virtual tracker avance entregables", liga: "#" },
     { id: "cv-encuestas", titulo: "Encuestas inicial y final de las niñas", desc: "Se contestan en vivo durante la sesión.", etapa: "club", tipo: "Formulario", palabras: "club virtual encuesta pre post ninas", liga: "#" },
     { id: "cv-seguridad", titulo: "Seguridad en el entorno virtual", desc: "Reglas para las sesiones en línea con las niñas.", etapa: "club", tipo: "Documento", palabras: "club virtual seguridad zoom", liga: "#" },
-    { id: "complica", titulo: "Cuando algo se complica", desc: "Qué hacer ante imprevistos con tu equipo, las familias o la plataforma.", etapa: "toda", tipo: "Guía", palabras: "problema ayuda conflicto imprevisto escalar", liga: "#complica" },
+    { id: "complica", titulo: "Cuando algo se complica", desc: "Qué hacer ante imprevistos con tu equipo, las familias o la plataforma.", etapa: "toda", tipo: "Guía", palabras: "problema ayuda conflicto imprevisto escalar papás no responden familia no firma no dan permiso problema con la familia", liga: "#complica" },
     { id: "faq", titulo: "Preguntas frecuentes", desc: "Respuestas rápidas a las dudas más comunes de los mentores.", etapa: "toda", tipo: "Guía", palabras: "faq dudas preguntas ayuda", liga: "#preguntas" },
 
     /* "info" (opcional) muestra un botón ⓘ con una burbuja de preguntas y respuestas
@@ -734,14 +743,17 @@ const CONFIG = {
 
   etapas: [
     {
-      id: "entrada", nombre: "Entrada", frase: "Calentando motores", fechas: "Nov 2026 – ene 2027", color: "--e1",
+      id: "entrada", nombre: "Entrada", frase: "Calentando motores", fechas: "Fechas por confirmar", color: "--e1",
       resumen: "Te preparas para mentorear: capacitación global, sesión con Mentoralia y quiz. Al acreditarlo, ya puedes vincularte con un equipo.",
       pasos: [
+        /* OJO: si agregas o quitas pasos, las palomitas guardadas se recorren
+           (ver las migraciones cm2027:migr-...). Los pasos con opcional: true
+           no se numeran: salen abajo como "Extra opcional". */
+        { texto: "Regístrate como mentor en la plataforma global de Technovation", nota: "El registro en la plataforma cierra el 22 de marzo.", recurso: "plataforma" },
         { texto: "Completa la capacitación global de Technovation (6 módulos)", recurso: "capacitacion-global" },
         { texto: "Completa tu perfil en la plataforma global", nota: "Si tienes dudas, revisa los tutoriales de la plataforma.", recurso: "plataforma" },
-        /* La burbuja ⓘ de este paso toma la "info" del recurso "background".
-           OJO: si agregas o quitas pasos, las palomitas guardadas se recorren. */
-        { texto: "Completa tu background check", nota: "Es una medida para cuidar la seguridad de las participantes y un requisito para vincularte con un equipo. Toca la ⓘ para saber más.", recurso: "background" },
+        // La burbuja ⓘ de este paso toma la "info" del recurso "background".
+        { texto: "Completa tu background check", obligatorio: true, nota: "Es requisito para mentores en México: sin él no puedes vincularte con un equipo. Es una medida para cuidar la seguridad de las participantes. Toca la ⓘ para saber más.", recurso: "background" },
         { texto: "Regístrate a la sesión sincrónica (Zoom) MX", nota: "Sábado 9 de enero de 2027, 9:00 h (hora del centro de México).", recurso: "zoom-registro" },
         { texto: "Asiste a la sesión, o ve la grabación si no pudiste", recurso: "grabacion" },
         { texto: "Contesta el quiz y la evaluación (mínimo 80%)", nota: "Al terminarlo te damos la liga del WhatsApp de mentores. Si ya lo hiciste y no la tienes, pídenosla desde el botón WhatsApp de mentores de arriba. Si acreditas, ¡ya puedes vincularte con un equipo!", recurso: "quiz" },
@@ -749,11 +761,11 @@ const CONFIG = {
       ],
       extra: ["protocolo"]
     },
-    { id: "vinculacion", nombre: "Planeando y vinculación", frase: "¡A conocer a tu equipo!", fechas: "Ene – 11 mar 2027", color: "--e2", resumen: "Te asignamos un equipo y lo ayudas a arrancar. El 11 de marzo de 2027 es el último día para registrar formalmente al equipo (estudiantes y mentores) en la plataforma." },
-    { id: "aprendizaje", nombre: "Camino de aprendizaje", frase: "Manos a la obra", fechas: "10 feb – abr 2027", color: "--e3", resumen: "Tu equipo aprende y construye su proyecto. Te recomendamos arrancar el 10 de febrero de 2027: son 12 semanas hasta la entrega final.", calendario: true },
-    { id: "entregas", nombre: "Entregas", frase: "La recta final", fechas: "Abr – 5 may 2027", color: "--e4", resumen: "Tu equipo prepara y sube sus entregables. La fecha límite es el 5 de mayo de 2027: los proyectos entregados al 100% pasan al concurso internacional." },
-    { id: "competencia", nombre: "Competencia", frase: "¡Hora de brillar!", fechas: "11 may – 28 jun 2027", color: "--e5", resumen: "Los proyectos pasan por las rondas de evaluación: primera ronda (cuartos de final) del 11 de mayo al 7 de junio, anuncio de semifinalistas globales el 14 de junio y segunda ronda (semifinales) del 15 al 28 de junio de 2027." },
-    { id: "celebracion", nombre: "Celebración", frase: "¡A festejar!", fechas: "2 jul 2027", color: "--e6", resumen: "Cerramos la temporada juntas y juntos. El 2 de julio de 2027 es la celebración virtual, con el anuncio de finalistas y ganadoras regionales. La fecha del World Summit está por confirmar." }
+    { id: "vinculacion", nombre: "Planeando y vinculación", frase: "¡A conocer a tu equipo!", fechas: "Fechas por confirmar", color: "--e2", resumen: "Te asignamos un equipo y lo ayudas a arrancar. El 11 de marzo de 2027 es el último día para registrar formalmente al equipo (estudiantes y mentores) en la plataforma." },
+    { id: "aprendizaje", nombre: "Camino de aprendizaje", frase: "Manos a la obra", fechas: "Febrero a mayo", color: "--e3", resumen: "Tu equipo aprende y construye su proyecto. Te recomendamos arrancar el 10 de febrero de 2027: son 12 semanas hasta la entrega final.", calendario: true },
+    { id: "entregas", nombre: "Entregas", frase: "La recta final", fechas: "Hasta el 5 de mayo", color: "--e4", resumen: "Tu equipo prepara y sube sus entregables. La fecha límite es el 5 de mayo de 2027: los proyectos entregados al 100% pasan al concurso internacional." },
+    { id: "competencia", nombre: "Competencia", frase: "¡Hora de brillar!", fechas: "Fechas por confirmar", color: "--e5", resumen: "Los proyectos pasan por las rondas de evaluación: primera ronda (cuartos de final) del 11 de mayo al 7 de junio, anuncio de semifinalistas globales el 14 de junio y segunda ronda (semifinales) del 15 al 28 de junio de 2027." },
+    { id: "celebracion", nombre: "Celebración", frase: "¡A festejar!", fechas: "Mayo (según tu región)", color: "--e6", resumen: "Cerramos la temporada juntas y juntos. La celebración es en mayo y la fecha depende de tu región: tu líder de club te avisa. La fecha del World Summit está por confirmar." }
   ],
 
   clubVirtual: {
@@ -771,7 +783,7 @@ const CONFIG = {
   // Íconos disponibles: equipo, familia, motivacion, acceso, mentor, escudo, chat, correo
   casos: [
     { titulo: "Dinámica de equipo", icono: "equipo", color: "--e3", ejemplos: ["Una integrante domina y las demás se desconectan", "Hay un conflicto entre integrantes", "Una estudiante quiere cambiarse de equipo"] },
-    { titulo: "Familias y permisos", icono: "familia", color: "--e2", ejemplos: ["Las familias no responden o no dan el permiso de papás", "Una familia quiere sacar a su hija a medio programa"] },
+    { titulo: "Familias y permisos", icono: "familia", color: "--e2", primero: "Primero: habla con tu líder de club.", ejemplos: ["Las familias no responden o no dan el permiso de papás", "Una familia quiere sacar a su hija a medio programa"] },
     { titulo: "Motivación y permanencia", icono: "motivacion", color: "--e1", ejemplos: ["Una estudiante quiere abandonar", "El equipo perdió el ritmo cerca de una fecha límite"] },
     { titulo: "Barreras de acceso", icono: "acceso", color: "--e4", ejemplos: ["Una estudiante no tiene computadora o internet", "Los horarios de la familia no cuadran con las sesiones"] },
     { titulo: "Tu capacidad como mentor", icono: "mentor", color: "--e5", ejemplos: ["Tu equipo necesita un conocimiento técnico que no tienes", "Te sientes rebasado y necesitas apoyo o una pausa"] }
@@ -795,11 +807,12 @@ const CONFIG = {
   },
 
   preguntas: [
-    { p: "¿Cuáles son los requisitos para ser mentor?", r: "Ser mayor de 18 años y comprometerte a acompañar a tu equipo durante la temporada, dedicándole de 2 a 4 horas a la semana. Además, completar la capacitación global de Technovation (6 módulos), tu perfil y tu background check en la plataforma global, tomar la capacitación de Mentoralia (en vivo o con la grabación) y acreditar el quiz con mínimo 80%. Con eso ya puedes vincularte con un equipo." },
+    { p: "¿Cuáles son los requisitos para ser mentor?", r: "Ser mayor de 18 años y comprometerte a acompañar a tu equipo durante la temporada, dedicándole de 2 a 4 horas a la semana. Además, registrarte como mentor en la plataforma global de Technovation (el registro cierra el 22 de marzo), completar la capacitación global (6 módulos), tu perfil y tu background check (obligatorio) en la plataforma, tomar la capacitación de Mentoralia (en vivo o con la grabación) y acreditar el quiz con mínimo 80%. Con eso ya puedes vincularte con un equipo." },
     { p: "¿Puedo ser mentor si no sé programar?", r: "Sí. Tu rol es acompañar al equipo, no programar por él. Para las dudas técnicas están las asesorías de programación." },
     { p: "¿Qué pasa si no pude asistir a la capacitación en vivo?", r: "Ve la grabación y contesta el quiz con mínimo 80%. Con eso acreditas igual que quien asistió en vivo." },
     { p: "¿Con quién veo los temas de mi equipo?", r: "Con tu líder de club: horarios, integrantes, avances o cualquier situación del día a día. Si mentoreas en el Club Virtual, tu líder de club es Mentoralia." },
-    { p: "¿Cuáles son las fechas importantes de la temporada?", r: "11 de marzo de 2027: último día para registrar formalmente al equipo (estudiantes y mentores). 10 de febrero: fecha recomendada para iniciar el proyecto. 5 de mayo: fecha límite de entrega. 11 de mayo al 7 de junio: primera ronda de evaluación (cuartos de final). 14 de junio: anuncio de semifinalistas globales. 15 al 28 de junio: segunda ronda (semifinales). 2 de julio: celebración virtual con el anuncio de finalistas y ganadoras regionales. La fecha del World Summit está por confirmar." },
+    { p: "¿Cuáles son las fechas importantes de la temporada?", r: "11 de marzo de 2027: último día para registrar formalmente al equipo (estudiantes y mentores). 10 de febrero: fecha recomendada para iniciar el proyecto. 5 de mayo: fecha límite de entrega. 11 de mayo al 7 de junio: primera ronda de evaluación (cuartos de final). 14 de junio: anuncio de semifinalistas globales. 15 al 28 de junio: segunda ronda (semifinales). Mayo: celebración de cierre, según tu región. 2 de julio: anuncio virtual de finalistas y ganadoras regionales. La fecha del World Summit está por confirmar." },
+    { p: "¿Qué hago si una familia no da el permiso de papás?", r: "Habla primero con tu líder de club; si no se resuelve, escríbenos. En la sección [Cuando algo se complica](#complica) encuentras más situaciones como esta." },
     { p: "¿Cómo me asignan un equipo?", r: "Mentoralia te asigna a un equipo ya formado, en dupla con otro mentor. Tienes 3 semanas después de la capacitación para quedar vinculado." },
     { p: "¿Es obligatorio el background check?", r: "Sí. Desde esta temporada Technovation Global lo pide a todos los mentores, también en México. Es una medida para cuidar la seguridad de las participantes, y sin él no puedes vincularte con un equipo. Lo completas por tu cuenta en la plataforma global; si tienes dudas, escribe a volunteers@technovation.org." },
     { p: "¿Cómo me uno al WhatsApp de mentores?", r: "Te damos la liga al terminar el quiz de evaluación de la capacitación (etapa de Entrada). Si ya lo hiciste y no la tienes, toca el botón «WhatsApp de mentores» de arriba y mándanos un correo; ya va con el texto escrito." },
@@ -840,6 +853,16 @@ const CONFIG = {
     store.set("cm2027:entrada:2", "0");
     store.set("cm2027:migr-bg", "1");
   }
+  // Una sola vez: en nov 2026 se agregó "Regístrate como mentor en la plataforma" como paso 1 de Entrada.
+  // Recorre todas las palomitas guardadas un lugar para que no se desacomoden.
+  if (store.get("cm2027:migr-registro") !== "1"){
+    for (let j = 6; j >= 0; j--){
+      const v = store.get(`cm2027:entrada:${j}`);
+      store.set(`cm2027:entrada:${j+1}`, v === "1" ? "1" : "0");
+    }
+    store.set("cm2027:entrada:0", "0");
+    store.set("cm2027:migr-registro", "1");
+  }
 
   // Accesos rápidos
   const ICONOS = {
@@ -873,19 +896,25 @@ const CONFIG = {
       <a class="ir" href="${esc(r.liga)}">Abrir</a>${r.info ? infoBurbuja(bid, r.info) : ""}</li>`;
   }
 
+  // Pasos: los obligatorios van numerados; los opcionales salen abajo en un bloque "Extra opcional".
+  // Cada paso guarda su palomita con su posición original en CONFIG (no cambia al separarlos).
   function listaPasos(pasos, prefijo){
-    return `<ol class="pasos">` + pasos.map((s,j) => {
+    const unPaso = (s, j, n) => {
       const info = s.info || (s.recurso && R[s.recurso] && R[s.recurso].info);
       s = { ...s, info };
       const k = `${prefijo}:${j}`, on = store.get(k) === "1", l = ligaDe(s), bid = `info-${prefijo.replace(/\W/g, "")}-${j}`;
       return `<li class="${on ? "hecho" : ""}">
-        <input type="checkbox" id="${k}" data-k="${k}" ${on ? "checked" : ""} aria-label="Marcar paso ${j+1} como hecho">
-        <span class="paso-txt"><label for="${k}">${s.opcional ? '<span class="opc">Opcional</span>' : ""}<span class="t">${esc(s.texto)}</span></label>${s.info ? `<button type="button" class="info-btn" aria-expanded="false" aria-controls="${bid}" aria-label="Más información sobre este paso">i</button>` : ""}
+        <input type="checkbox" id="${k}" data-k="${k}" ${on ? "checked" : ""} aria-label="Marcar ${s.opcional ? "el extra opcional" : `paso ${n}`} como hecho">
+        <span class="paso-txt"><label for="${k}">${s.obligatorio ? '<span class="obl">Obligatorio</span>' : ""}<span class="t">${esc(s.texto)}</span></label>${s.info ? `<button type="button" class="info-btn" aria-expanded="false" aria-controls="${bid}" aria-label="Más información sobre este paso">i</button>` : ""}
         ${s.nota ? `<label for="${k}" class="nota">${esc(s.nota)}</label>` : ""}</span>
         ${l ? `<a class="ir" href="${esc(l)}">Abrir</a>` : "<span></span>"}
         ${s.info ? `<div class="burbuja" id="${bid}" hidden><dl>${s.info.map(x => `<dt>${esc(x.t)}</dt><dd>${esc(x.r)}</dd>`).join("")}</dl></div>` : ""}
       </li>`;
-    }).join("") + `</ol>`;
+    };
+    const todos = pasos.map((s,j) => [s,j]);
+    const ob = todos.filter(([s]) => !s.opcional), op = todos.filter(([s]) => s.opcional);
+    return `<ol class="pasos">` + ob.map(([s,j], n) => unPaso(s, j, n + 1)).join("") + `</ol>`
+      + (op.length ? `<div class="extra-opc"><p class="extra-t">Extra opcional</p><ul class="pasos pasos-opc">${op.map(([s,j]) => unPaso(s, j)).join("")}</ul></div>` : "");
   }
 
   // Burbuja de información de un paso (botón ⓘ)
@@ -946,7 +975,7 @@ const CONFIG = {
       if (dt < 2600) requestAnimationFrame(paso); else cv.remove();
     })(t0);
   }
-  const barraHTML = `<div class="progreso"><div class="barra"><span></span></div><span class="cuenta"></span></div>`;
+  const barraHTML = `<p class="ayuda-pasos">Ve marcando tú cada paso conforme lo completes. Se guarda en este navegador.</p><div class="progreso"><div class="barra"><span></span></div><span class="cuenta"></span></div>`;
 
   // Avisos
   function leerFecha(s){
@@ -1051,7 +1080,6 @@ const CONFIG = {
       h += `<h4>Tus pasos</h4>${barraHTML}${listaPasos(e.pasos, "cm2027:" + e.id)}`;
       recursos = (e.extra || []).map(id => R[id]).filter(Boolean);
       if (recursos.length) h += `<h4>Recursos de consulta</h4><ul class="rlista">${recursos.map(r => tarjeta(r)).join("")}</ul>`;
-      h += `<p class="guardado">Las palomitas se guardan solo en este navegador, para que sepas en qué paso vas.</p>`;
     } else {
       recursos = CONFIG.recursos.filter(r => r.etapa === e.id);
       h += `<h4>${est==="proxima" ? "Esta etapa todavía no abre, pero aquí va un adelanto 👀" : "Recursos de esta etapa"}</h4>
@@ -1169,9 +1197,10 @@ const CONFIG = {
   const tile = (icono, color) => `<span class="tile" style="--c:var(${color})" aria-hidden="true"><svg viewBox="0 0 24 24">${ICO[icono] || ""}</svg></span>`;
   const mail = "mailto:" + CONFIG.contacto.correo;
 
-  // Preguntas frecuentes
+  // Preguntas frecuentes. En las respuestas, [texto](#seccion) se vuelve una liga dentro de la página.
+  const ligasInternas = t => t.replace(/\[([^\]]+)\]\((#[\w-]+)\)/g, (m, txt, h) => `<a href="${h}">${txt}</a>`);
   document.getElementById("faq").innerHTML = CONFIG.preguntas.map(x =>
-    `<details><summary>${esc(x.p)}</summary><p>${esc(x.r)}</p></details>`).join("");
+    `<details><summary>${esc(x.p)}</summary><p>${ligasInternas(esc(x.r))}</p></details>`).join("");
 
   // Cuando algo se complica
   const sg = CONFIG.seguridad;
@@ -1181,7 +1210,7 @@ const CONFIG = {
   document.getElementById("casos").innerHTML = CONFIG.casos.map(c => `
     <article class="caso" style="--c:var(${c.color})">
       ${tile(c.icono, c.color)}
-      <h3>${esc(c.titulo)}</h3>
+      <h3>${esc(c.titulo)}</h3>${c.primero ? `<p class="primero">${esc(c.primero)}</p>` : ""}
       <ul>${c.ejemplos.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
       <a class="escala" href="${esc(mail)}">¿No se resuelve con tu líder de club? <span>Escríbenos</span></a>
     </article>`).join("") + `
