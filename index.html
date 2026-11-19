@@ -212,6 +212,7 @@ body{overflow-x:clip}
 .pasos-opc input:not(:checked)::before{content:""}
 .ir{font-weight:700;font-size:.9rem;text-decoration:underline;text-decoration-color:var(--c);text-decoration-thickness:3px;text-underline-offset:4px;color:var(--ink);white-space:nowrap;padding:.1rem .2rem}
 .ir:hover{color:var(--alert)}
+.ir-grupo{display:flex;flex-direction:column;align-items:flex-end;gap:.45rem}
 .guardado{margin:1.5rem 0 0;font-size:.85rem;color:var(--ink-soft)}
 .cal{margin:.25rem 0 0;border:2px dashed var(--line);border-radius:14px;padding:1.25rem;display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;justify-content:space-between;color:var(--ink-soft)}
 .cal iframe{width:100%;height:28rem;border:0;border-radius:10px}
@@ -632,6 +633,7 @@ const CONFIG = {
      - tipo: importante, fecha o general. */
   avisosHoja: "",
   avisosEjemplo: [
+    { fecha: "2026-11-19", tipo: "general", titulo: "¡Ya está la guía del background check!", texto: "Te explicamos paso a paso cómo completarlo, en video y en PDF. También los encuentras en el paso 4 de Entrada.", liga: "https://youtu.be/ckOI4Z-MYvU", texto_liga: "Ver el video" },
     { fecha: "2026-11-13", tipo: "importante", titulo: "Estamos trabajando en el quiz de evaluación", texto: "Muy pronto lo publicamos. Para que te podamos vincular con un equipo, necesitas aprobarlo con al menos 80%." },
     { fecha: "2026-11-12", tipo: "fecha", titulo: "Abre el registro en la plataforma global", texto: "Ya puedes registrarte como mentor en la plataforma de Technovation y empezar tu etapa de Entrada.", liga: "https://my.technovation.org/", texto_liga: "Ir a la plataforma" },
     { fecha: "2026-11-11", tipo: "general", titulo: "¡Estrenamos Centro de Mentores!", texto: "Todo lo que necesitas para la temporada, ahora en un solo lugar." },
@@ -727,13 +729,14 @@ const CONFIG = {
 
     /* "info" (opcional) muestra un botón ⓘ con una burbuja de preguntas y respuestas
        en la tarjeta del recurso (buscador, etapas, Tutoriales) y en el paso que lo use. */
-    { id: "background", titulo: "Cómo completar tu perfil y tu background check", desc: "Paso a paso para completar tu perfil y tu background check en la plataforma global. Es una medida para cuidar la seguridad de las participantes y un requisito para vincularte.", etapa: "entrada", tipo: "Video", tutorial: "plataforma", palabras: "perfil registro verificacion antecedentes requisito seguridad proteccion participantes checkr onboarding tutorial", liga: "https://my.technovation.org/",
+    { id: "background", titulo: "Cómo completar tu background check", desc: "Video paso a paso para completar tu background check en la plataforma global. Es una medida para cuidar la seguridad de las participantes y un requisito para vincularte.", etapa: "entrada", tipo: "Video", tutorial: "plataforma", palabras: "background check verificacion antecedentes requisito seguridad proteccion participantes checkr onboarding tutorial video", liga: "https://youtu.be/ckOI4Z-MYvU",
       info: [
         { t: "¿Qué es?", r: "Desde esta temporada, Technovation Global pide a todos los mentores, también en México, completar un background check (verificación de antecedentes) como parte de su registro en la plataforma global." },
         { t: "¿Por qué es importante?", r: "Es una medida para cuidar la seguridad de las participantes: forma parte de los procedimientos de seguridad estudiantil de Technovation. Por eso, sin él no puedes vincularte con un equipo." },
-        { t: "¿Cómo se hace?", r: "Según el país, con Checkr, la empresa socia de Technovation, o subiendo documentos que cumplan los requisitos locales. Todavía falta confirmar cuál de las dos opciones aplica en México; te avisaremos en cuanto lo sepamos." },
+        { t: "¿Cómo se hace?", r: "Sigue el video o la guía PDF paso a paso. Según el país, se hace con Checkr, la empresa socia de Technovation, o subiendo documentos que cumplan los requisitos locales. Todavía falta confirmar cuál de las dos opciones aplica en México; te avisaremos en cuanto lo sepamos." },
         { t: "¿Quién lo hace?", r: "Tú lo completas por tu cuenta y Technovation HQ lo gestiona. Si tienes dudas, escribe a Megan y Rae en volunteers@technovation.org. Mentoralia te avisa y te acompaña en el proceso." }
       ] },
+    { id: "background-guia", titulo: "Guía paso a paso del background check (PDF)", desc: "La misma explicación del video, en una guía para leer o imprimir. Es requisito para vincularte con un equipo.", etapa: "entrada", tipo: "Guía", palabras: "background check guia pdf verificacion antecedentes requisito seguridad proteccion participantes checkr onboarding", liga: "https://drive.google.com/file/d/1wquSF42iMdFaJprG7Kttl7KFtabMJfyE/view?usp=sharing" },
     { id: "acuerdo-equipo", titulo: "Acuerdo de trabajo con tu equipo", desc: "Para ponerse de acuerdo con tu equipo en cómo van a trabajar juntos durante la temporada.", etapa: "vinculacion", tipo: "Documento", palabras: "acuerdo trabajo equipo reglas compromisos convivencia dupla", liga: "https://drive.google.com/file/d/1EFSeuPitRLOrx7Idy0BSZuXAHsB_DQrw/view?usp=sharing" },
     { id: "guia-entregables", titulo: "Guía de entregables", desc: "Qué incluye cada entregable, con los cambios de esta temporada: ética, Business Canvas y video técnico.", etapa: "aprendizaje", tipo: "Guía", palabras: "entregables etica business canvas video tecnico pitch requisitos", liga: "#" },
     { id: "banco-casos", titulo: "Banco de casos prácticos", desc: "Los casos de la capacitación, para consultarlos cuando enfrentes una situación real.", etapa: "aprendizaje", tipo: "Documento", palabras: "casos practica ejemplos situaciones", liga: "#" },
@@ -753,7 +756,9 @@ const CONFIG = {
         { texto: "Completa la capacitación global de Technovation (6 módulos)", recurso: "capacitacion-global" },
         { texto: "Completa tu perfil en la plataforma global", nota: "Si tienes dudas, revisa los tutoriales de la plataforma.", recurso: "plataforma" },
         // La burbuja ⓘ de este paso toma la "info" del recurso "background".
-        { texto: "Completa tu background check", obligatorio: true, nota: "Es requisito para mentores en México: sin él no puedes vincularte con un equipo. Es una medida para cuidar la seguridad de las participantes. Toca la ⓘ para saber más.", recurso: "background" },
+        { texto: "Completa tu background check", obligatorio: true, nota: "Es requisito para mentores en México: sin él no puedes vincularte con un equipo. Es una medida para cuidar la seguridad de las participantes. Toca la ⓘ para saber más.", recurso: "background",
+          // "ligas" muestra varios botones en lugar de un solo "Abrir"
+          ligas: [{ texto: "Ver video", recurso: "background" }, { texto: "Guía PDF", recurso: "background-guia" }] },
         { texto: "Regístrate a la sesión sincrónica (Zoom) MX", nota: "Sábado 9 de enero de 2027, 9:00 h (hora del centro de México).", recurso: "zoom-registro" },
         { texto: "Asiste a la sesión, o ve la grabación si no pudiste", recurso: "grabacion" },
         { texto: "Contesta el quiz y la evaluación (mínimo 80%)", nota: "Al terminarlo te damos la liga del WhatsApp de mentores. Si ya lo hiciste y no la tienes, pídenosla desde el botón WhatsApp de mentores de arriba. Si acreditas, ¡ya puedes vincularte con un equipo!", recurso: "quiz" },
@@ -915,7 +920,8 @@ const CONFIG = {
         <input type="checkbox" id="${k}" data-k="${k}" ${on ? "checked" : ""} aria-label="Marcar ${s.opcional ? "el extra opcional" : `paso ${n}`} como hecho">
         <span class="paso-txt"><label for="${k}">${s.obligatorio ? '<span class="obl">Obligatorio</span>' : ""}<span class="t">${esc(s.texto)}</span></label>${s.info ? `<button type="button" class="info-btn" aria-expanded="false" aria-controls="${bid}" aria-label="Más información sobre este paso">i</button>` : ""}
         ${s.nota ? `<label for="${k}" class="nota">${esc(s.nota)}</label>` : ""}</span>
-        ${l ? `<a class="ir" href="${esc(l)}">Abrir</a>` : "<span></span>"}
+        ${s.ligas ? `<span class="ir-grupo">${s.ligas.map(x => `<a class="ir" href="${esc(ligaDe(x))}">${esc(x.texto)}</a>`).join("")}</span>`
+          : l ? `<a class="ir" href="${esc(l)}">Abrir</a>` : "<span></span>"}
         ${s.info ? `<div class="burbuja" id="${bid}" hidden><dl>${s.info.map(x => `<dt>${esc(x.t)}</dt><dd>${esc(x.r)}</dd>`).join("")}</dl></div>` : ""}
       </li>`;
     };
