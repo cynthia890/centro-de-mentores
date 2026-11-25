@@ -736,6 +736,7 @@ const CONFIG = {
         { t: "¿Cómo se hace?", r: "Sigue el video o la guía PDF paso a paso. Según el país, se hace con Checkr, la empresa socia de Technovation, o subiendo documentos que cumplan los requisitos locales. Todavía falta confirmar cuál de las dos opciones aplica en México; te avisaremos en cuanto lo sepamos." },
         { t: "¿Quién lo hace?", r: "Tú lo completas por tu cuenta y Technovation HQ lo gestiona. Si tienes dudas, escribe a Megan y Rae en volunteers@technovation.org. Mentoralia te avisa y te acompaña en el proceso." }
       ] },
+    { id: "registro-guia", titulo: "Guía de registro para mentores nuevos (PDF)", desc: "Paso a paso para registrarte como mentor en la plataforma global de Technovation. El registro cierra el 22 de marzo.", etapa: "entrada", tipo: "Guía", palabras: "registro registrarme inscripcion cuenta crear cuenta plataforma mentor nuevo guia pdf como me registro alta", liga: "https://drive.google.com/file/d/1KNDwACHbAl5a61jFZI6L-h_ygZcj9w2r/view?usp=sharing" },
     { id: "background-guia", titulo: "Guía paso a paso del background check (PDF)", desc: "La misma explicación del video, en una guía para leer o imprimir. Es requisito para vincularte con un equipo.", etapa: "entrada", tipo: "Guía", palabras: "background check guia pdf verificacion antecedentes requisito seguridad proteccion participantes checkr onboarding", liga: "https://drive.google.com/file/d/1wquSF42iMdFaJprG7Kttl7KFtabMJfyE/view?usp=sharing" },
     { id: "acuerdo-equipo", titulo: "Acuerdo de trabajo con tu equipo", desc: "Para ponerse de acuerdo con tu equipo en cómo van a trabajar juntos durante la temporada.", etapa: "vinculacion", tipo: "Documento", palabras: "acuerdo trabajo equipo reglas compromisos convivencia dupla", liga: "https://drive.google.com/file/d/1EFSeuPitRLOrx7Idy0BSZuXAHsB_DQrw/view?usp=sharing" },
     { id: "guia-entregables", titulo: "Guía de entregables", desc: "Qué incluye cada entregable, con los cambios de esta temporada: ética, Business Canvas y video técnico.", etapa: "aprendizaje", tipo: "Guía", palabras: "entregables etica business canvas video tecnico pitch requisitos", liga: "#" },
@@ -752,7 +753,8 @@ const CONFIG = {
         /* OJO: si agregas o quitas pasos, las palomitas guardadas se recorren
            (ver las migraciones cm2027:migr-...). Los pasos con opcional: true
            no se numeran: salen abajo como "Extra opcional". */
-        { texto: "Regístrate como mentor en la plataforma global de Technovation", nota: "El registro en la plataforma cierra el 22 de marzo.", recurso: "plataforma" },
+        { texto: "Regístrate como mentor en la plataforma global de Technovation", nota: "El registro en la plataforma cierra el 22 de marzo. Si es tu primera vez, sigue la guía de registro paso a paso.", recurso: "plataforma",
+          ligas: [{ texto: "Ir a la plataforma", recurso: "plataforma" }, { texto: "Guía PDF", recurso: "registro-guia" }] },
         { texto: "Completa la capacitación global de Technovation (6 módulos)", recurso: "capacitacion-global" },
         { texto: "Completa tu perfil en la plataforma global", nota: "Si tienes dudas, revisa los tutoriales de la plataforma.", recurso: "plataforma" },
         // La burbuja ⓘ de este paso toma la "info" del recurso "background".
